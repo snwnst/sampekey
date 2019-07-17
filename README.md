@@ -1,37 +1,18 @@
-*.swp
-*.*~
-project.lock.json
-.DS_Store
-*.pyc
-nupkg/
+# Sampekey
 
-# Visual Studio Code
-.vscode
 
-# Rider
-.idea
 
-# User-specific files
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
+## Installation
 
-# Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-build/
-bld/
-[Bb]in/
-[Oo]bj/
-[Oo]ut/
-msbuild.log
-msbuild.err
-msbuild.wrn
+PSQLS_SAMPEKEY
+SQLS_SAMPEKEY
 
-# Visual Studio 2015
-.vs/
+
+## Usage
+
+
+## Contributing
+
+
+## License
+[gpl-3.0](https://www.gnu.org/licenses/gpl-3.0.html)

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 
-namespace sampekey.classes
+namespace Sampekey.Contex
 {
     public class SampekeyDbContex : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
@@ -24,14 +24,7 @@ namespace sampekey.classes
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql(
-                    Environment.GetEnvironmentVariable(
-                        "PSQLS_SAMPEKEY"
-                    )
-                );
-            }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
