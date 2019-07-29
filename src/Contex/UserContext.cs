@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace Sampekey.ModelContext
+namespace Sampekey.Contex
 {
     public class UserContext : IdentityUser
     {

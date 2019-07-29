@@ -24,26 +24,26 @@ namespace Sampekey.Contex
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (Environment.GetEnvironmentVariable("SQL_SAMPEKEY") == null)
+            if (Environment.GetEnvironmentVariable("SQL_SAMPEKEY") != null)
             {
                 optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("SQL_SAMPEKEY"));
-            }else if (Environment.GetEnvironmentVariable("PSQL_SAMPEKEY") == null)
+            }
+            else if (Environment.GetEnvironmentVariable("PSQL_SAMPEKEY") != null)
             {
                 optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("PSQL_SAMPEKEY"));
             }
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<IdentityUser>().ToTable("USER");
-            modelBuilder.Entity<IdentityRole>().ToTable("ROLE");
-            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("USER_CLAIM");
-            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("USER_LOGIN");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("USER_ROLE");
-            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("USER_TOKEN");
-
+            modelBuilder.Entity<IdentityUser>().ToTable("T_USER");
+            modelBuilder.Entity<IdentityRole>().ToTable("T_ROLE");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("T_USER_CLAIM");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("T_ROLE_CLAIM");
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("T_USER_LOGIN");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("T_USER_ROLE");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("T_USER_TOKEN");
         }
     }
 }
