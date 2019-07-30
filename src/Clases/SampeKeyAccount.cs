@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
@@ -32,7 +33,8 @@ namespace Sampekey.Clases
 
         public async Task<SignInResult> LoginAccount(SampekeyUserAccountRequest model)
         {
-            return await this.signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+            var result = await dbcontex.User.FirstOrDefaultAsync(usr => usr.UserName == model.UserName);
+            return await this.signInManager.PasswordSignInAsync(result.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
         }
 
         public async Task<IdentityResult> UpdatePassword(SampekeyUserAccountRequest model)
