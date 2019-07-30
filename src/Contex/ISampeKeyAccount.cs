@@ -9,5 +9,6 @@ namespace Sampekey.Contex
         
         Task<IdentityResult> CreateAccount(SampekeyUserAccountRequest model);
         Task<SignInResult> LoginAccount(SampekeyUserAccountRequest model);
+        string CreateToken(SampekeyUserAccountRequest model);
     } 
 }

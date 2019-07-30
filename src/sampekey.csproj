@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <PackageId>Sampekey</PackageId>
     <Description>Libreria para sistema de autenticacion generica</Description>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <Authors>Nestor Martinez Hernandez</Authors>
     <Company>Techmedel</Company>
     <PackageProjectUrl>https://github.com/techmedel/sampekey</PackageProjectUrl>
@@ -19,7 +19,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
   </ItemGroup>
 
 </Project>
