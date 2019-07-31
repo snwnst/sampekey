@@ -5,6 +5,6 @@ namespace Sampekey.Model
 {
     public class UserClaim : IdentityUserClaim<string>
     {
-        public User User { get; set; }
+
     }
 }

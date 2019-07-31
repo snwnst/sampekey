@@ -5,6 +5,6 @@ namespace Sampekey.Model
 {
     public class RoleClaim : IdentityRoleClaim<string>
     {
-        public Role Role { get; set; }
+
     }
 }

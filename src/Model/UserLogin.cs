@@ -5,6 +5,6 @@ namespace Sampekey.Model
 {
     public class UserLogin : IdentityUserLogin<string>
     {
-        public User User { get; set; }
+ 
     }
 }

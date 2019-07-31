@@ -37,6 +37,8 @@ namespace Sampekey.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("T_ROLE_CLAIM");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRoleClaim<string>");
@@ -60,6 +62,8 @@ namespace Sampekey.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("T_USER_CLAIM");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserClaim<string>");
@@ -81,6 +85,8 @@ namespace Sampekey.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("T_USER_LOGIN");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserLogin<string>");
@@ -96,6 +102,8 @@ namespace Sampekey.Migrations
                         .IsRequired();
 
                     b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("T_USER_ROLE");
 
@@ -146,26 +154,6 @@ namespace Sampekey.Migrations
                     b.ToTable("T_ROLE");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.Status", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .IsUnicode(false);
-
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasMaxLength(4)
-                        .IsUnicode(false);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("T_STATUS");
-                });
-
             modelBuilder.Entity("Sampekey.Model.User", b =>
                 {
                     b.Property<string>("Id")
@@ -176,15 +164,10 @@ namespace Sampekey.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<DateTime>("DateRegister")
-                        .HasColumnType("DATETIME");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("IdStatus");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -211,8 +194,6 @@ namespace Sampekey.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdStatus");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -228,16 +209,12 @@ namespace Sampekey.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>");
 
-                    b.HasIndex("RoleId");
-
                     b.HasDiscriminator().HasValue("RoleClaim");
                 });
 
             modelBuilder.Entity("Sampekey.Model.UserClaim", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>");
-
-                    b.HasIndex("UserId");
 
                     b.HasDiscriminator().HasValue("UserClaim");
                 });
@@ -246,16 +223,12 @@ namespace Sampekey.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>");
 
-                    b.HasIndex("UserId");
-
                     b.HasDiscriminator().HasValue("UserLogin");
                 });
 
             modelBuilder.Entity("Sampekey.Model.UserRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
-
-                    b.HasIndex("RoleId");
 
                     b.HasDiscriminator().HasValue("UserRole");
                 });
@@ -264,56 +237,52 @@ namespace Sampekey.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserToken<string>");
 
-                    b.Property<DateTime>("ExpirationDate");
-
                     b.HasDiscriminator().HasValue("UserToken");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.User", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Sampekey.Model.Status", "Status")
-                        .WithMany("Users")
-                        .HasForeignKey("IdStatus");
+                    b.HasOne("Sampekey.Model.Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Sampekey.Model.RoleClaim", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Sampekey.Model.Role", "Role")
-                        .WithMany("RoleClaims")
-                        .HasForeignKey("RoleId");
-                });
-
-            modelBuilder.Entity("Sampekey.Model.UserClaim", b =>
-                {
-                    b.HasOne("Sampekey.Model.User", "User")
-                        .WithMany("UserClaims")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Sampekey.Model.UserLogin", b =>
-                {
-                    b.HasOne("Sampekey.Model.User", "User")
-                        .WithMany("UserLogins")
+                    b.HasOne("Sampekey.Model.User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Sampekey.Model.UserRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Sampekey.Model.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId");
-
-                    b.HasOne("Sampekey.Model.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId");
+                    b.HasOne("Sampekey.Model.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Sampekey.Model.UserToken", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Sampekey.Model.User", "User")
-                        .WithMany("UserTokens")
-                        .HasForeignKey("UserId");
+                    b.HasOne("Sampekey.Model.Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Sampekey.Model.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Sampekey.Model.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

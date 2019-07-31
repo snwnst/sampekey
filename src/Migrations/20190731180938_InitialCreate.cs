@@ -23,16 +23,28 @@ namespace Sampekey.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "T_STATUS",
+                name: "T_USER",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Key = table.Column<string>(unicode: false, maxLength: 4, nullable: false),
-                    Description = table.Column<string>(unicode: false, maxLength: 100, nullable: false)
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_T_STATUS", x => x.Id);
+                    table.PrimaryKey("PK_T_USER", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,40 +66,7 @@ namespace Sampekey.Migrations
                         column: x => x.RoleId,
                         principalTable: "T_ROLE",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "T_USER",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    DateRegister = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    IdStatus = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_T_USER", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_T_USER_T_STATUS_IdStatus",
-                        column: x => x.IdStatus,
-                        principalTable: "T_STATUS",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,7 +88,7 @@ namespace Sampekey.Migrations
                         column: x => x.UserId,
                         principalTable: "T_USER",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -149,13 +128,13 @@ namespace Sampekey.Migrations
                         column: x => x.RoleId,
                         principalTable: "T_ROLE",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_T_USER_ROLE_T_USER_UserId",
                         column: x => x.UserId,
                         principalTable: "T_USER",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,8 +145,7 @@ namespace Sampekey.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
-                    ExpirationDate = table.Column<DateTime>(nullable: true)
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -177,7 +155,7 @@ namespace Sampekey.Migrations
                         column: x => x.UserId,
                         principalTable: "T_USER",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -191,11 +169,6 @@ namespace Sampekey.Migrations
                 name: "IX_T_ROLE_CLAIM_RoleId",
                 table: "T_ROLE_CLAIM",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_T_USER_IdStatus",
-                table: "T_USER",
-                column: "IdStatus");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -247,9 +220,6 @@ namespace Sampekey.Migrations
 
             migrationBuilder.DropTable(
                 name: "T_USER");
-
-            migrationBuilder.DropTable(
-                name: "T_STATUS");
         }
     }
 }

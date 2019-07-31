@@ -27,33 +27,6 @@ namespace Sampekey.Clases
             this.signInManager = _signInManager;
         }
 
-        public async Task<IdentityResult> CreateAccount(SampekeyUserAccountRequest model)
-        {
-            return await this.userManager.CreateAsync(model, model.Password);
-        }
-
-        public async Task<SignInResult> LoginAccount(SampekeyUserAccountRequest model)
-        {
-            var result = await dbcontex.User.FirstOrDefaultAsync(usr => usr.UserName == model.UserName);
-            return await this.signInManager.PasswordSignInAsync(result.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
-        }
-
-        public async Task<IdentityResult> UpdatePassword(SampekeyUserAccountRequest model)
-        {        
-            return await userManager.ChangePasswordAsync(
-                await userManager.FindByEmailAsync(model.Email),
-                model.Password,
-                model.NewPassword
-            );
-        }
-
-        public async Task<IdentityResult> ForceChangePassword(SampekeyUserAccountRequest model)
-        {
-            var currentUser = await userManager.FindByEmailAsync(model.Email);
-            await userManager.RemovePasswordAsync(currentUser);
-            return await userManager.AddPasswordAsync(currentUser, model.Password);
-        }
-
         public string CreateToken(SampekeyUserAccountRequest model)
         {
             return new JwtSecurityTokenHandler().WriteToken(GetJwtSecurityToken(model));
