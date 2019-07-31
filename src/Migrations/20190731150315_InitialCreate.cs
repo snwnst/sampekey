@@ -23,6 +23,41 @@ namespace Sampekey.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "T_STATUS",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Key = table.Column<string>(unicode: false, maxLength: 4, nullable: false),
+                    Description = table.Column<string>(unicode: false, maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_T_STATUS", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "T_ROLE_CLAIM",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_T_ROLE_CLAIM", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_T_ROLE_CLAIM_T_ROLE_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "T_ROLE",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "T_USER",
                 columns: table => new
                 {
@@ -40,32 +75,19 @@ namespace Sampekey.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    DateRegister = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    IdStatus = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_T_USER", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "T_ROLE_CLAIM",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_T_ROLE_CLAIM", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_T_ROLE_CLAIM_T_ROLE_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "T_ROLE",
+                        name: "FK_T_USER_T_STATUS_IdStatus",
+                        column: x => x.IdStatus,
+                        principalTable: "T_STATUS",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,7 +98,8 @@ namespace Sampekey.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,7 +109,7 @@ namespace Sampekey.Migrations
                         column: x => x.UserId,
                         principalTable: "T_USER",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,7 +119,8 @@ namespace Sampekey.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,7 +138,8 @@ namespace Sampekey.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<string>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,13 +149,13 @@ namespace Sampekey.Migrations
                         column: x => x.RoleId,
                         principalTable: "T_ROLE",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_T_USER_ROLE_T_USER_UserId",
                         column: x => x.UserId,
                         principalTable: "T_USER",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -140,7 +165,9 @@ namespace Sampekey.Migrations
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
+                    ExpirationDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -150,7 +177,7 @@ namespace Sampekey.Migrations
                         column: x => x.UserId,
                         principalTable: "T_USER",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -164,6 +191,11 @@ namespace Sampekey.Migrations
                 name: "IX_T_ROLE_CLAIM_RoleId",
                 table: "T_ROLE_CLAIM",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_T_USER_IdStatus",
+                table: "T_USER",
+                column: "IdStatus");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -215,6 +247,9 @@ namespace Sampekey.Migrations
 
             migrationBuilder.DropTable(
                 name: "T_USER");
+
+            migrationBuilder.DropTable(
+                name: "T_STATUS");
         }
     }
 }

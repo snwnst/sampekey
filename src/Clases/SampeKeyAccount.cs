@@ -7,18 +7,19 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Sampekey.Contex;
+using Sampekey.Model;
 
 namespace Sampekey.Clases
 {
     public class SampeKeyAccount : ISampeKeyAccount
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
         private readonly SampekeyDbContex dbcontex;
         public SampeKeyAccount(
             SampekeyDbContex _dbcontex,
-            UserManager<IdentityUser> _userManager,
-            SignInManager<IdentityUser> _signInManager
+            UserManager<User> _userManager,
+            SignInManager<User> _signInManager
         )
         {
             this.dbcontex = _dbcontex;
@@ -49,17 +50,15 @@ namespace Sampekey.Clases
         public async Task<IdentityResult> ForceChangePassword(SampekeyUserAccountRequest model)
         {
             var currentUser = await userManager.FindByEmailAsync(model.Email);
-
             await userManager.RemovePasswordAsync(currentUser);
-        
             return await userManager.AddPasswordAsync(currentUser, model.Password);
         }
-
 
         public string CreateToken(SampekeyUserAccountRequest model)
         {
             return new JwtSecurityTokenHandler().WriteToken(GetJwtSecurityToken(model));
         }
+        
         private JwtSecurityToken GetJwtSecurityToken(SampekeyUserAccountRequest model)
         {
             return new JwtSecurityToken(
