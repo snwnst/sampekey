@@ -16,6 +16,7 @@ namespace Sampekey.Clases
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly SampekeyDbContex dbcontex;
+        private readonly string key;
         public SampeKeyAccount(
             SampekeyDbContex _dbcontex,
             UserManager<User> _userManager,
@@ -25,13 +26,27 @@ namespace Sampekey.Clases
             this.dbcontex = _dbcontex;
             this.userManager = _userManager;
             this.signInManager = _signInManager;
+            this.key = Environment.GetEnvironmentVariable("SAMPEKEY_SECRET_KEY");
         }
 
         public string CreateToken(SampekeyUserAccountRequest model)
         {
             return new JwtSecurityTokenHandler().WriteToken(GetJwtSecurityToken(model));
         }
-        
+
+        public TokenValidationParameters GetTokenValidationParameters()
+        {
+            return new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                ClockSkew = TimeSpan.Zero
+            };
+        }
+
         private JwtSecurityToken GetJwtSecurityToken(SampekeyUserAccountRequest model)
         {
             return new JwtSecurityToken(
@@ -44,11 +59,7 @@ namespace Sampekey.Clases
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                },
                signingCredentials: new SigningCredentials(
-                   new SymmetricSecurityKey(
-                       Encoding.UTF8.GetBytes(
-                           Environment.GetEnvironmentVariable("SAMPEKEY_SECRET_KEY")
-                        )
-                    ),
+                   new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
                    SecurityAlgorithms.HmacSha256
                 )
             );
