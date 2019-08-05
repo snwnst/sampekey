@@ -34,19 +34,6 @@ namespace Sampekey.Clases
             return new JwtSecurityTokenHandler().WriteToken(GetJwtSecurityToken(model));
         }
 
-        public TokenValidationParameters GetTokenValidationParameters()
-        {
-            return new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
-                ClockSkew = TimeSpan.Zero
-            };
-        }
-
         private JwtSecurityToken GetJwtSecurityToken(SampekeyUserAccountRequest model)
         {
             return new JwtSecurityToken(

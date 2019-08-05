@@ -9,7 +9,6 @@ namespace Sampekey.Contex
     {
         
         string CreateToken(SampekeyUserAccountRequest model);
-        TokenValidationParameters GetTokenValidationParameters();
-
+       
     } 
 }
