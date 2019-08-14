@@ -21,6 +21,8 @@ namespace Sampekey.Contex
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
+                ValidIssuer = Dominio,
+                ValidAudience = Dominio,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key)),
                 ClockSkew = TimeSpan.Zero
             };
