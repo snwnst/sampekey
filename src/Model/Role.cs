@@ -6,6 +6,7 @@ namespace Sampekey.Model
 {
     public class Role : IdentityRole
     {
+        public virtual ICollection<UserRole> UserRoles { get; set; }
         public virtual ICollection<KingdomCastleRolePermission> KingdomCastleRolePermissions { get; set; }
     }
 }

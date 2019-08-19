@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <PackageId>Sampekey</PackageId>
     <Description>Libreria para sistema de autenticacion generica</Description>
-    <Version>1.2.6</Version>
+    <Version>1.2.7</Version>
     <Authors>Nestor Martinez Hernandez</Authors>
     <Company>Techmedel</Company>
     <PackageProjectUrl>https://github.com/techmedel/sampekey</PackageProjectUrl>

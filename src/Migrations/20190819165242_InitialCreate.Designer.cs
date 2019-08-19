@@ -10,7 +10,7 @@ using Sampekey.Contex;
 namespace Sampekey.Migrations
 {
     [DbContext(typeof(SampekeyDbContex))]
-    [Migration("20190731180938_InitialCreate")]
+    [Migration("20190819165242_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -105,8 +105,6 @@ namespace Sampekey.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("T_USER_ROLE");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<string>");
@@ -130,6 +128,76 @@ namespace Sampekey.Migrations
                     b.ToTable("T_USER_TOKEN");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserToken<string>");
+                });
+
+            modelBuilder.Entity("Sampekey.Model.Castle", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("T_SYSTEM");
+                });
+
+            modelBuilder.Entity("Sampekey.Model.Kingdom", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("T_ENVIROMENT");
+                });
+
+            modelBuilder.Entity("Sampekey.Model.KingdomCastleRolePermission", b =>
+                {
+                    b.Property<string>("KingdomId")
+                        .HasColumnName("EnviromentId");
+
+                    b.Property<string>("CastleId")
+                        .HasColumnName("SystemId");
+
+                    b.Property<string>("RoleId");
+
+                    b.Property<string>("PermissionId");
+
+                    b.Property<bool>("Value");
+
+                    b.HasKey("KingdomId", "CastleId", "RoleId", "PermissionId");
+
+                    b.HasIndex("CastleId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("T_ENVIROMENT_SYSTEM_ROLE_PERMISSION");
+                });
+
+            modelBuilder.Entity("Sampekey.Model.Permission", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateRegister")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("T_PERMISSION");
                 });
 
             modelBuilder.Entity("Sampekey.Model.Role", b =>
@@ -232,6 +300,8 @@ namespace Sampekey.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
 
+                    b.HasIndex("RoleId");
+
                     b.HasDiscriminator().HasValue("UserRole");
                 });
 
@@ -266,25 +336,42 @@ namespace Sampekey.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Sampekey.Model.Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Sampekey.Model.User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.HasOne("Sampekey.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Sampekey.Model.KingdomCastleRolePermission", b =>
+                {
+                    b.HasOne("Sampekey.Model.Castle", "Castle")
+                        .WithMany("KingdomCastleRolePermissions")
+                        .HasForeignKey("CastleId");
+
+                    b.HasOne("Sampekey.Model.Kingdom", "Kingdom")
+                        .WithMany("KingdomCastleRolePermissions")
+                        .HasForeignKey("KingdomId");
+
+                    b.HasOne("Sampekey.Model.Permission", "Permission")
+                        .WithMany("KingdomCastleRolePermissions")
+                        .HasForeignKey("PermissionId");
+
+                    b.HasOne("Sampekey.Model.Role", "Role")
+                        .WithMany("KingdomCastleRolePermissions")
+                        .HasForeignKey("RoleId");
+                });
+
+            modelBuilder.Entity("Sampekey.Model.UserRole", b =>
+                {
+                    b.HasOne("Sampekey.Model.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId");
+
+                    b.HasOne("Sampekey.Model.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

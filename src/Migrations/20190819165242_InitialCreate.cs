@@ -9,6 +9,33 @@ namespace Sampekey.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "T_ENVIROMENT",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_T_ENVIROMENT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "T_PERMISSION",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    DateRegister = table.Column<DateTime>(type: "DATETIME", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_T_PERMISSION", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "T_ROLE",
                 columns: table => new
                 {
@@ -20,6 +47,19 @@ namespace Sampekey.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_T_ROLE", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "T_SYSTEM",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_T_SYSTEM", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,6 +107,45 @@ namespace Sampekey.Migrations
                         principalTable: "T_ROLE",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "T_ENVIROMENT_SYSTEM_ROLE_PERMISSION",
+                columns: table => new
+                {
+                    EnviromentId = table.Column<string>(nullable: false),
+                    SystemId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false),
+                    PermissionId = table.Column<string>(nullable: false),
+                    Value = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION", x => new { x.EnviromentId, x.SystemId, x.RoleId, x.PermissionId });
+                    table.ForeignKey(
+                        name: "FK_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_T_SYSTEM_SystemId",
+                        column: x => x.SystemId,
+                        principalTable: "T_SYSTEM",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_T_ENVIROMENT_EnviromentId",
+                        column: x => x.EnviromentId,
+                        principalTable: "T_ENVIROMENT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_T_PERMISSION_PermissionId",
+                        column: x => x.PermissionId,
+                        principalTable: "T_PERMISSION",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_T_ROLE_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "T_ROLE",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,13 +207,13 @@ namespace Sampekey.Migrations
                         column: x => x.RoleId,
                         principalTable: "T_ROLE",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_T_USER_ROLE_T_USER_UserId",
                         column: x => x.UserId,
                         principalTable: "T_USER",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +236,21 @@ namespace Sampekey.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_SystemId",
+                table: "T_ENVIROMENT_SYSTEM_ROLE_PERMISSION",
+                column: "SystemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_PermissionId",
+                table: "T_ENVIROMENT_SYSTEM_ROLE_PERMISSION",
+                column: "PermissionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_RoleId",
+                table: "T_ENVIROMENT_SYSTEM_ROLE_PERMISSION",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -201,6 +295,9 @@ namespace Sampekey.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "T_ENVIROMENT_SYSTEM_ROLE_PERMISSION");
+
+            migrationBuilder.DropTable(
                 name: "T_ROLE_CLAIM");
 
             migrationBuilder.DropTable(
@@ -214,6 +311,15 @@ namespace Sampekey.Migrations
 
             migrationBuilder.DropTable(
                 name: "T_USER_TOKEN");
+
+            migrationBuilder.DropTable(
+                name: "T_SYSTEM");
+
+            migrationBuilder.DropTable(
+                name: "T_ENVIROMENT");
+
+            migrationBuilder.DropTable(
+                name: "T_PERMISSION");
 
             migrationBuilder.DropTable(
                 name: "T_ROLE");

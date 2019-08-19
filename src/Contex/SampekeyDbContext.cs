@@ -30,7 +30,8 @@ namespace Sampekey.Contex
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("SQL_SAMPEKEY"));
+            //optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("SQL_SAMPEKEY"));
+            optionsBuilder.UseSqlServer("Server=cnsfsqlbisie.cnsf.gob.mx;Database=SAMPEKEY;User Id=ETL_Adm;Password=ETLAdmin123#;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -72,6 +73,21 @@ namespace Sampekey.Contex
                     .WithMany(p => p.KingdomCastleRolePermissions)
                     .HasForeignKey(d => d.PermissionId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserRoles)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Role)
+                   .WithMany(p => p.UserRoles)
+                   .HasForeignKey(d => d.RoleId)
+                   .OnDelete(DeleteBehavior.ClientSetNull);
+
             });
 
             modelBuilder.Entity<Permission>(entity =>

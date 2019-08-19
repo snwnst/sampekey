@@ -103,8 +103,6 @@ namespace Sampekey.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("T_USER_ROLE");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<string>");
@@ -300,6 +298,8 @@ namespace Sampekey.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
 
+                    b.HasIndex("RoleId");
+
                     b.HasDiscriminator().HasValue("UserRole");
                 });
 
@@ -334,19 +334,6 @@ namespace Sampekey.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Sampekey.Model.Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Sampekey.Model.User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.HasOne("Sampekey.Model.User")
@@ -372,6 +359,17 @@ namespace Sampekey.Migrations
                     b.HasOne("Sampekey.Model.Role", "Role")
                         .WithMany("KingdomCastleRolePermissions")
                         .HasForeignKey("RoleId");
+                });
+
+            modelBuilder.Entity("Sampekey.Model.UserRole", b =>
+                {
+                    b.HasOne("Sampekey.Model.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId");
+
+                    b.HasOne("Sampekey.Model.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
