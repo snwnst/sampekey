@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sampekey.Contex;
 
 namespace Sampekey.Migrations
 {
     [DbContext(typeof(SampekeyDbContex))]
-    partial class SampekeyDbContexModelSnapshot : ModelSnapshot
+    [Migration("20190819154811_CreateMultiSystemsPermissions")]
+    partial class CreateMultiSystemsPermissions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,11 +162,9 @@ namespace Sampekey.Migrations
 
             modelBuilder.Entity("Sampekey.Model.KingdomCastleRolePermission", b =>
                 {
-                    b.Property<string>("KingdomId")
-                        .HasColumnName("EnviromentId");
+                    b.Property<string>("KingdomId");
 
-                    b.Property<string>("CastleId")
-                        .HasColumnName("SystemId");
+                    b.Property<string>("CastleId");
 
                     b.Property<string>("RoleId");
 
