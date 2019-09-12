@@ -188,18 +188,6 @@ namespace sampekey.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<string>("Class");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Icon");
-
-                    b.Property<string>("KeyName");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Path");
-
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("DATETIME");
 

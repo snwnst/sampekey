@@ -6,7 +6,7 @@ using Sampekey.Model.Core;
 namespace Sampekey.Model.Configuration.Module
 {
     [Table("T_SYSTEM_MODULES")]
-    public class CastleLand : PathCatalog
+    public class CastleLand : Default
     {
         [Column("SystemId")]
         public string CastleId { get; set; }

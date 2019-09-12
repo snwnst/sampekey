@@ -6,12 +6,12 @@ using Sampekey.Model.Configuration.Module;
 
 namespace Sampekey.Interface.Repository
 {
-    public class KingdomCastleRolePermissionRepo: IKingdomCastleRolePermission
+    public class EsrpRepo: IEsrp
     {
 
         private readonly SampekeyDbContex context;
 
-        public KingdomCastleRolePermissionRepo(SampekeyDbContex _context)
+        public EsrpRepo(SampekeyDbContex _context)
         {
             context = _context;
         }

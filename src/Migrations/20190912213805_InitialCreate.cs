@@ -190,13 +190,7 @@ namespace sampekey.Migrations
                     SystemId = table.Column<string>(nullable: false),
                     ModuleId = table.Column<string>(nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    Active = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    KeyName = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Path = table.Column<string>(nullable: true),
-                    Icon = table.Column<string>(nullable: true),
-                    Class = table.Column<string>(nullable: true)
+                    Active = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

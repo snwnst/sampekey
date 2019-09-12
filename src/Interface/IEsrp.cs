@@ -4,7 +4,7 @@ using Sampekey.Model.Configuration.Module;
 
 namespace Sampekey.Interface
 {
-    public interface IKingdomCastleRolePermission
+    public interface IEsrp
     {
         Task<IEnumerable<KingdomCastleRolePermission>> GetAllKingdomCastleRolePermissions();
         Task<KingdomCastleRolePermission> FindKingdomCastleRolePermissionById(KingdomCastleRolePermission value);

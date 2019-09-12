@@ -10,7 +10,7 @@ using Sampekey.Contex;
 namespace sampekey.Migrations
 {
     [DbContext(typeof(SampekeyDbContex))]
-    [Migration("20190912162229_InitialCreate")]
+    [Migration("20190912213805_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -189,18 +189,6 @@ namespace sampekey.Migrations
                         .HasColumnName("ModuleId");
 
                     b.Property<bool>("Active");
-
-                    b.Property<string>("Class");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Icon");
-
-                    b.Property<string>("KeyName");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Path");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("DATETIME");
