@@ -7,10 +7,8 @@ using Sampekey.Model.Core;
 namespace Sampekey.Model.Administration
 {
     [Table("T_PERMISSION")]
-    public class Permission : Default
+    public class Permission : Catalog
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
         public virtual ICollection<KingdomCastleRolePermission> KingdomCastleRolePermissions { get; set; }
     }
 }

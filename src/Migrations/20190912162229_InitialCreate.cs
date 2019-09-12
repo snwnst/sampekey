@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Sampekey.Migrations
+namespace sampekey.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -13,7 +13,10 @@ namespace Sampekey.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    RegistrationDate = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    Active = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
+                    KeyName = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -22,13 +25,34 @@ namespace Sampekey.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "T_MODULES",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    RegistrationDate = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    Active = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    KeyName = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true),
+                    Icon = table.Column<string>(nullable: true),
+                    Class = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_T_MODULES", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "T_PERMISSION",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    RegistrationDate = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    Active = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    DateRegister = table.Column<DateTime>(type: "DATETIME", nullable: false)
+                    KeyName = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -54,8 +78,14 @@ namespace Sampekey.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    RegistrationDate = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    Active = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    KeyName = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true),
+                    Icon = table.Column<string>(nullable: true),
+                    Class = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,7 +110,9 @@ namespace Sampekey.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    RegistrationDate = table.Column<DateTime>(nullable: false),
+                    Active = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,15 +145,17 @@ namespace Sampekey.Migrations
                 name: "T_ENVIROMENT_SYSTEM_ROLE_PERMISSION",
                 columns: table => new
                 {
+                    Id = table.Column<string>(nullable: false),
                     EnviromentId = table.Column<string>(nullable: false),
                     SystemId = table.Column<string>(nullable: false),
                     RoleId = table.Column<string>(nullable: false),
                     PermissionId = table.Column<string>(nullable: false),
-                    Value = table.Column<bool>(nullable: false)
+                    RegistrationDate = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    Active = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION", x => new { x.EnviromentId, x.SystemId, x.RoleId, x.PermissionId });
+                    table.PrimaryKey("PK_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION", x => new { x.Id, x.EnviromentId, x.SystemId, x.RoleId, x.PermissionId });
                     table.ForeignKey(
                         name: "FK_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_T_SYSTEM_SystemId",
                         column: x => x.SystemId,
@@ -144,6 +178,39 @@ namespace Sampekey.Migrations
                         name: "FK_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_T_ROLE_RoleId",
                         column: x => x.RoleId,
                         principalTable: "T_ROLE",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "T_SYSTEM_MODULES",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    SystemId = table.Column<string>(nullable: false),
+                    ModuleId = table.Column<string>(nullable: false),
+                    RegistrationDate = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    Active = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    KeyName = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true),
+                    Icon = table.Column<string>(nullable: true),
+                    Class = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_T_SYSTEM_MODULES", x => new { x.Id, x.SystemId, x.ModuleId });
+                    table.ForeignKey(
+                        name: "FK_T_SYSTEM_MODULES_T_SYSTEM_SystemId",
+                        column: x => x.SystemId,
+                        principalTable: "T_SYSTEM",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_T_SYSTEM_MODULES_T_MODULES_ModuleId",
+                        column: x => x.ModuleId,
+                        principalTable: "T_MODULES",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -243,6 +310,11 @@ namespace Sampekey.Migrations
                 column: "SystemId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_EnviromentId",
+                table: "T_ENVIROMENT_SYSTEM_ROLE_PERMISSION",
+                column: "EnviromentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_T_ENVIROMENT_SYSTEM_ROLE_PERMISSION_PermissionId",
                 table: "T_ENVIROMENT_SYSTEM_ROLE_PERMISSION",
                 column: "PermissionId");
@@ -263,6 +335,16 @@ namespace Sampekey.Migrations
                 name: "IX_T_ROLE_CLAIM_RoleId",
                 table: "T_ROLE_CLAIM",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_T_SYSTEM_MODULES_SystemId",
+                table: "T_SYSTEM_MODULES",
+                column: "SystemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_T_SYSTEM_MODULES_ModuleId",
+                table: "T_SYSTEM_MODULES",
+                column: "ModuleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -301,6 +383,9 @@ namespace Sampekey.Migrations
                 name: "T_ROLE_CLAIM");
 
             migrationBuilder.DropTable(
+                name: "T_SYSTEM_MODULES");
+
+            migrationBuilder.DropTable(
                 name: "T_USER_CLAIM");
 
             migrationBuilder.DropTable(
@@ -313,13 +398,16 @@ namespace Sampekey.Migrations
                 name: "T_USER_TOKEN");
 
             migrationBuilder.DropTable(
-                name: "T_SYSTEM");
-
-            migrationBuilder.DropTable(
                 name: "T_ENVIROMENT");
 
             migrationBuilder.DropTable(
                 name: "T_PERMISSION");
+
+            migrationBuilder.DropTable(
+                name: "T_SYSTEM");
+
+            migrationBuilder.DropTable(
+                name: "T_MODULES");
 
             migrationBuilder.DropTable(
                 name: "T_ROLE");

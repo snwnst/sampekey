@@ -28,6 +28,8 @@ namespace Sampekey.Contex
         public virtual DbSet<Kingdom> Kingdom { get; set; }
         public virtual DbSet<KingdomCastleRolePermission> KingdomCastleRolePermission { get; set; }
         public virtual DbSet<Permission> Permission { get; set; }
+        public virtual DbSet<Land> Land { get; set; }
+        public virtual DbSet<CastleLand> CastleLand { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -40,21 +42,38 @@ namespace Sampekey.Contex
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Role>();
+            modelBuilder.Entity<Role>().ToTable("T_ROLE");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("T_ROLE_CLAIM");
+            modelBuilder.Entity<User>().ToTable("T_USER");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("T_USER_CLAIM");
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("T_USER_LOGIN");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("T_USER_ROLE");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("T_USER_TOKEN");
             modelBuilder.Entity<RoleClaim>();
-            modelBuilder.Entity<User>();
-            modelBuilder.Entity<UserClaim>();
-            modelBuilder.Entity<UserLogin>();
-            modelBuilder.Entity<UserRole>();
-            modelBuilder.Entity<UserToken>();
             modelBuilder.Entity<Castle>();
+            modelBuilder.Entity<Land>();
+            modelBuilder.Entity<CastleLand>();
             modelBuilder.Entity<Kingdom>();
             modelBuilder.Entity<KingdomCastleRolePermission>();
             modelBuilder.Entity<Permission>();
 
+            modelBuilder.Entity<CastleLand>(entity =>
+            {
+                entity.HasKey(c => new { c.Id, c.CastleId, c.LandId });
+                entity.HasOne(d => d.Castle)
+                    .WithMany(p => p.CastleLands)
+                    .HasForeignKey(d => d.CastleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Land)
+                    .WithMany(p => p.CastleLands)
+                    .HasForeignKey(d => d.LandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
             modelBuilder.Entity<KingdomCastleRolePermission>(entity =>
             {
-                entity.HasKey(c => new { c.KingdomId, c.CastleId, c.RoleId, c.PermissionId });
+                entity.HasKey(c => new { c.Id, c.KingdomId, c.CastleId, c.RoleId, c.PermissionId });
 
                 entity.HasOne(d => d.Kingdom)
                     .WithMany(p => p.KingdomCastleRolePermissions)
@@ -92,7 +111,7 @@ namespace Sampekey.Contex
 
             });
 
-            modelBuilder.Entity<Permission>();
+
 
         }
     }

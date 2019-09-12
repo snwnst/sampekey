@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sampekey.Contex;
 
-namespace Sampekey.Migrations
+namespace sampekey.Migrations
 {
     [DbContext(typeof(SampekeyDbContex))]
-    [Migration("20190819165242_InitialCreate")]
+    [Migration("20190912162229_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,36 +130,115 @@ namespace Sampekey.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserToken<string>");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.Castle", b =>
+            modelBuilder.Entity("Sampekey.Model.Administration.Permission", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("Active");
+
                     b.Property<string>("Description");
 
+                    b.Property<string>("KeyName");
+
                     b.Property<string>("Name");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("DATETIME");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("T_PERMISSION");
+                });
+
+            modelBuilder.Entity("Sampekey.Model.Configuration.Module.Castle", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Class");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Icon");
+
+                    b.Property<string>("KeyName");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Path");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("DATETIME");
 
                     b.HasKey("Id");
 
                     b.ToTable("T_SYSTEM");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.Kingdom", b =>
+            modelBuilder.Entity("Sampekey.Model.Configuration.Module.CastleLand", b =>
+                {
+                    b.Property<string>("Id");
+
+                    b.Property<string>("CastleId")
+                        .HasColumnName("SystemId");
+
+                    b.Property<string>("LandId")
+                        .HasColumnName("ModuleId");
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Class");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Icon");
+
+                    b.Property<string>("KeyName");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Path");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("DATETIME");
+
+                    b.HasKey("Id", "CastleId", "LandId");
+
+                    b.HasIndex("CastleId");
+
+                    b.HasIndex("LandId");
+
+                    b.ToTable("T_SYSTEM_MODULES");
+                });
+
+            modelBuilder.Entity("Sampekey.Model.Configuration.Module.Kingdom", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("Active");
+
                     b.Property<string>("Description");
 
+                    b.Property<string>("KeyName");
+
                     b.Property<string>("Name");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("DATETIME");
 
                     b.HasKey("Id");
 
                     b.ToTable("T_ENVIROMENT");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.KingdomCastleRolePermission", b =>
+            modelBuilder.Entity("Sampekey.Model.Configuration.Module.KingdomCastleRolePermission", b =>
                 {
+                    b.Property<string>("Id");
+
                     b.Property<string>("KingdomId")
                         .HasColumnName("EnviromentId");
 
@@ -170,11 +249,16 @@ namespace Sampekey.Migrations
 
                     b.Property<string>("PermissionId");
 
-                    b.Property<bool>("Value");
+                    b.Property<bool>("Active");
 
-                    b.HasKey("KingdomId", "CastleId", "RoleId", "PermissionId");
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("DATETIME");
+
+                    b.HasKey("Id", "KingdomId", "CastleId", "RoleId", "PermissionId");
 
                     b.HasIndex("CastleId");
+
+                    b.HasIndex("KingdomId");
 
                     b.HasIndex("PermissionId");
 
@@ -183,24 +267,34 @@ namespace Sampekey.Migrations
                     b.ToTable("T_ENVIROMENT_SYSTEM_ROLE_PERMISSION");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.Permission", b =>
+            modelBuilder.Entity("Sampekey.Model.Configuration.Module.Land", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DateRegister")
-                        .HasColumnType("DATETIME");
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Class");
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("Icon");
+
+                    b.Property<string>("KeyName");
+
                     b.Property<string>("Name");
+
+                    b.Property<string>("Path");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("DATETIME");
 
                     b.HasKey("Id");
 
-                    b.ToTable("T_PERMISSION");
+                    b.ToTable("T_MODULES");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.Role", b =>
+            modelBuilder.Entity("Sampekey.Model.Identity.Role", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -224,12 +318,14 @@ namespace Sampekey.Migrations
                     b.ToTable("T_ROLE");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.User", b =>
+            modelBuilder.Entity("Sampekey.Model.Identity.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<bool>("Active");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -255,6 +351,8 @@ namespace Sampekey.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<DateTime>("RegistrationDate");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
@@ -275,46 +373,56 @@ namespace Sampekey.Migrations
                     b.ToTable("T_USER");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.RoleClaim", b =>
+            modelBuilder.Entity("Sampekey.Model.Identity.RoleClaim", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>");
+
+                    b.ToTable("T_ROLE_CLAIM");
 
                     b.HasDiscriminator().HasValue("RoleClaim");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.UserClaim", b =>
+            modelBuilder.Entity("Sampekey.Model.Identity.UserClaim", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>");
+
+                    b.ToTable("T_USER_CLAIM");
 
                     b.HasDiscriminator().HasValue("UserClaim");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.UserLogin", b =>
+            modelBuilder.Entity("Sampekey.Model.Identity.UserLogin", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>");
+
+                    b.ToTable("T_USER_LOGIN");
 
                     b.HasDiscriminator().HasValue("UserLogin");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.UserRole", b =>
+            modelBuilder.Entity("Sampekey.Model.Identity.UserRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
 
                     b.HasIndex("RoleId");
 
+                    b.ToTable("T_USER_ROLE");
+
                     b.HasDiscriminator().HasValue("UserRole");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.UserToken", b =>
+            modelBuilder.Entity("Sampekey.Model.Identity.UserToken", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserToken<string>");
+
+                    b.ToTable("T_USER_TOKEN");
 
                     b.HasDiscriminator().HasValue("UserToken");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Sampekey.Model.Role")
+                    b.HasOne("Sampekey.Model.Identity.Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -322,7 +430,7 @@ namespace Sampekey.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Sampekey.Model.User")
+                    b.HasOne("Sampekey.Model.Identity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -330,7 +438,7 @@ namespace Sampekey.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Sampekey.Model.User")
+                    b.HasOne("Sampekey.Model.Identity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -338,38 +446,49 @@ namespace Sampekey.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Sampekey.Model.User")
+                    b.HasOne("Sampekey.Model.Identity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Sampekey.Model.KingdomCastleRolePermission", b =>
+            modelBuilder.Entity("Sampekey.Model.Configuration.Module.CastleLand", b =>
                 {
-                    b.HasOne("Sampekey.Model.Castle", "Castle")
+                    b.HasOne("Sampekey.Model.Configuration.Module.Castle", "Castle")
+                        .WithMany("CastleLands")
+                        .HasForeignKey("CastleId");
+
+                    b.HasOne("Sampekey.Model.Configuration.Module.Land", "Land")
+                        .WithMany("CastleLands")
+                        .HasForeignKey("LandId");
+                });
+
+            modelBuilder.Entity("Sampekey.Model.Configuration.Module.KingdomCastleRolePermission", b =>
+                {
+                    b.HasOne("Sampekey.Model.Configuration.Module.Castle", "Castle")
                         .WithMany("KingdomCastleRolePermissions")
                         .HasForeignKey("CastleId");
 
-                    b.HasOne("Sampekey.Model.Kingdom", "Kingdom")
+                    b.HasOne("Sampekey.Model.Configuration.Module.Kingdom", "Kingdom")
                         .WithMany("KingdomCastleRolePermissions")
                         .HasForeignKey("KingdomId");
 
-                    b.HasOne("Sampekey.Model.Permission", "Permission")
+                    b.HasOne("Sampekey.Model.Administration.Permission", "Permission")
                         .WithMany("KingdomCastleRolePermissions")
                         .HasForeignKey("PermissionId");
 
-                    b.HasOne("Sampekey.Model.Role", "Role")
+                    b.HasOne("Sampekey.Model.Identity.Role", "Role")
                         .WithMany("KingdomCastleRolePermissions")
                         .HasForeignKey("RoleId");
                 });
 
-            modelBuilder.Entity("Sampekey.Model.UserRole", b =>
+            modelBuilder.Entity("Sampekey.Model.Identity.UserRole", b =>
                 {
-                    b.HasOne("Sampekey.Model.Role", "Role")
+                    b.HasOne("Sampekey.Model.Identity.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId");
 
-                    b.HasOne("Sampekey.Model.User", "User")
+                    b.HasOne("Sampekey.Model.Identity.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId");
                 });

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sampekey.Model.Core
@@ -10,6 +9,5 @@ namespace Sampekey.Model.Core
         [Column(TypeName="DATETIME")]
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
         public Boolean Active { get; set; } = true;
-
     }
 }
