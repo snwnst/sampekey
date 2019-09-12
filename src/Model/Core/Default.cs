@@ -1,0 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Sampekey.Model.Core
+{
+    public class Default
+    {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        [Column(TypeName="DATETIME")]
+        public DateTime RegistrationDate { get; set; } = DateTime.Now;
+        public Boolean Active { get; set; } = true;
+
+    }
+}

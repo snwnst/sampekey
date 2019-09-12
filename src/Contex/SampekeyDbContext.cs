@@ -1,8 +1,10 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Sampekey.Model;
 using Microsoft.AspNetCore.Identity;
+using Sampekey.Model.Administration;
+using Sampekey.Model.Identity;
+using Sampekey.Model.Configuration.Module;
 
 namespace Sampekey.Contex
 {
@@ -38,17 +40,17 @@ namespace Sampekey.Contex
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Role>().ToTable("T_ROLE");
-            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("T_ROLE_CLAIM");
-            modelBuilder.Entity<User>().ToTable("T_USER");
-            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("T_USER_CLAIM");
-            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("T_USER_LOGIN");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("T_USER_ROLE");
-            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("T_USER_TOKEN");
-            modelBuilder.Entity<Castle>().ToTable("T_SYSTEM");
-            modelBuilder.Entity<Kingdom>().ToTable("T_ENVIROMENT");
-            modelBuilder.Entity<KingdomCastleRolePermission>().ToTable("T_ENVIROMENT_SYSTEM_ROLE_PERMISSION");
-            modelBuilder.Entity<Permission>().ToTable("T_PERMISSION");
+            modelBuilder.Entity<Role>();
+            modelBuilder.Entity<RoleClaim>();
+            modelBuilder.Entity<User>();
+            modelBuilder.Entity<UserClaim>();
+            modelBuilder.Entity<UserLogin>();
+            modelBuilder.Entity<UserRole>();
+            modelBuilder.Entity<UserToken>();
+            modelBuilder.Entity<Castle>();
+            modelBuilder.Entity<Kingdom>();
+            modelBuilder.Entity<KingdomCastleRolePermission>();
+            modelBuilder.Entity<Permission>();
 
             modelBuilder.Entity<KingdomCastleRolePermission>(entity =>
             {
@@ -90,11 +92,7 @@ namespace Sampekey.Contex
 
             });
 
-            modelBuilder.Entity<Permission>(entity =>
-            {
-                entity.Property(e => e.DateRegister)
-                    .HasColumnType("DATETIME");
-            });
+            modelBuilder.Entity<Permission>();
 
         }
     }

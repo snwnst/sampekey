@@ -1,8 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Sampekey.Model.Administration;
+using Sampekey.Model.Identity;
 
-namespace Sampekey.Model
+namespace Sampekey.Model.Configuration.Module
 {
+    [Table("T_ENVIROMENT_SYSTEM_ROLE_PERMISSION")]
     public class KingdomCastleRolePermission
     {
         [Column("EnviromentId")]
