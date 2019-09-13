@@ -11,11 +11,11 @@ namespace Sampekey.Interface
     public interface IUser
     {
         Task<IEnumerable<User>> GetAllUsers();
-        Task<User> FindUserByUserName(SampekeyUserAccountRequest userAccountRequest);
-        Task<IdentityResult> CreateUser(SampekeyUserAccountRequest userAccountRequest);
-        Task<IdentityResult> AddDefaultRoleToUser(User user);
-        Task<IList<Claim>> GetClaimsFromUser(User user);
-        Task<IList<string>> GetRolesFromUser(User user);
+        Task<User> FindUserById(string value);
+        Task<User> AddUser(User value);
+        Task<User> UpdateUser(User value);
+        Task<bool> DeleteUser(User value);
+
     }
 }
 

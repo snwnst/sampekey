@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Sampekey.Contex;
 using Sampekey.Model.Identity;
+using System.Security.Claims;
 
 namespace Sampekey.Interface.Repository
 {
@@ -94,6 +95,29 @@ namespace Sampekey.Interface.Repository
         {
             await userManager.RemovePasswordAsync(userAccountRequest);
             await userManager.AddPasswordAsync(userAccountRequest, userAccountRequest.Password);
+        }
+
+        public Task<User> FindUserByUserName(SampekeyUserAccountRequest userAccountRequest){
+            return userManager.FindByNameAsync(userAccountRequest.UserName);
+        }
+
+        public Task<IdentityResult> CreateUser(SampekeyUserAccountRequest userAccountRequest)
+        {
+            return userManager.CreateAsync(userAccountRequest, userAccountRequest.Password);
+        }
+
+        public Task<IdentityResult> AddDefaultRoleToUser(User user)
+        {
+            return userManager.AddToRoleAsync(user, "default");
+        }
+
+        public Task<IList<string>> GetRolesFromUser(User user)
+        {
+            return userManager.GetRolesAsync(user);
+        }
+        public Task<IList<Claim>> GetClaimsFromUser(User user)
+        {
+            return userManager.GetClaimsAsync(user);
         }
 
     }

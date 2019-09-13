@@ -11,47 +11,38 @@ namespace Sampekey.Interface.Repository
     public class UserRepo : IUser
     {
         private readonly SampekeyDbContex context;
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
 
-        public UserRepo(
-            SampekeyDbContex _context,
-            UserManager<User> _userManager,
-            SignInManager<User> _signInManager)
+        public UserRepo( SampekeyDbContex _context)
         {
             context = _context;
-            userManager = _userManager;
-            signInManager = _signInManager;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return await context.User
-            .ToListAsync();
+            return await context.User.ToListAsync();
         }
-
-        public Task<User> FindUserByUserName(SampekeyUserAccountRequest userAccountRequest){
-            return userManager.FindByNameAsync(userAccountRequest.UserName);
-        }
-
-        public Task<IdentityResult> CreateUser(SampekeyUserAccountRequest userAccountRequest)
+        public async Task<User> FindUserById(string value)
         {
-            return userManager.CreateAsync(userAccountRequest, userAccountRequest.Password);
+            return await context.User.FirstOrDefaultAsync(i => i.Id == value);
         }
-
-        public Task<IdentityResult> AddDefaultRoleToUser(User user)
+        public async Task<User> AddUser(User value)
         {
-            return userManager.AddToRoleAsync(user, "default");
+            await context.User.AddAsync(value);
+            context.SaveChanges();
+            return value;
         }
-
-        public Task<IList<string>> GetRolesFromUser(User user)
+        public async Task<User> UpdateUser(User value)
         {
-            return userManager.GetRolesAsync(user);
+            context.Update(value);
+            context.SaveChanges();
+            return await context.User.FirstOrDefaultAsync(i => i.Id == value.Id);
         }
-
-        public Task<IList<Claim>> GetClaimsFromUser(User user)
+        public async Task<bool> DeleteUser(User value)
         {
-            return userManager.GetClaimsAsync(user);
+            context.Remove(value);
+            await context.SaveChangesAsync();
+            return true;
+
         }
 
     }
