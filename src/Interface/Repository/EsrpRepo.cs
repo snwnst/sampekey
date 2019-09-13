@@ -20,9 +20,9 @@ namespace Sampekey.Interface.Repository
         {
             return await context.KingdomCastleRolePermission.ToListAsync();
         }
-        public async Task<KingdomCastleRolePermission> FindKingdomCastleRolePermissionById(KingdomCastleRolePermission value)
+        public async Task<KingdomCastleRolePermission> FindKingdomCastleRolePermissionById(string value)
         {
-            return await context.KingdomCastleRolePermission.FirstOrDefaultAsync(i => i.Id == value.Id);
+            return await context.KingdomCastleRolePermission.FirstOrDefaultAsync(i => i.Id == value);
         }
         public async Task<KingdomCastleRolePermission> AddKingdomCastleRolePermission(KingdomCastleRolePermission value)
         {

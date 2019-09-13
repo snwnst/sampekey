@@ -20,9 +20,9 @@ namespace Sampekey.Interface.Repository
         {
             return await context.Permission.ToListAsync();
         }
-        public async Task<Permission> FindPermissionById(Permission value)
+        public async Task<Permission> FindPermissionById(string value)
         {
-            return await context.Permission.FirstOrDefaultAsync(i => i.Id == value.Id);
+            return await context.Permission.FirstOrDefaultAsync(i => i.Id == value);
         }
         public async Task<Permission> AddPermission(Permission value)
         {

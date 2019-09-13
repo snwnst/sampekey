@@ -7,7 +7,7 @@ namespace Sampekey.Interface
     public interface IEsrp
     {
         Task<IEnumerable<KingdomCastleRolePermission>> GetAllKingdomCastleRolePermissions();
-        Task<KingdomCastleRolePermission> FindKingdomCastleRolePermissionById(KingdomCastleRolePermission value);
+        Task<KingdomCastleRolePermission> FindKingdomCastleRolePermissionById(string value);
         Task<KingdomCastleRolePermission> AddKingdomCastleRolePermission(KingdomCastleRolePermission value);
         Task<KingdomCastleRolePermission> UpdateKingdomCastleRolePermission(KingdomCastleRolePermission value);
         Task<bool> DeleteKingdomCastleRolePermission(KingdomCastleRolePermission value);

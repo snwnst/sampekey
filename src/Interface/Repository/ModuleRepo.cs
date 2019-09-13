@@ -20,9 +20,9 @@ namespace Sampekey.Interface.Repository
         {
             return await context.Land.ToListAsync();
         }
-        public async Task<Land> FindLandById(Land value)
+        public async Task<Land> FindLandById(string value)
         {
-            return await context.Land.FirstOrDefaultAsync(i => i.Id == value.Id);
+            return await context.Land.FirstOrDefaultAsync(i => i.Id == value);
         }
         public async Task<Land> AddLand(Land value)
         {

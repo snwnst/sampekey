@@ -20,9 +20,9 @@ namespace Sampekey.Interface.Repository
         {
             return await context.Kingdom.ToListAsync();
         }
-        public async Task<Kingdom> FindKingdomById(Kingdom value)
+        public async Task<Kingdom> FindKingdomById(string value)
         {
-            return await context.Kingdom.FirstOrDefaultAsync(i => i.Id == value.Id);
+            return await context.Kingdom.FirstOrDefaultAsync(i => i.Id == value);
         }
         public async Task<Kingdom> AddKingdom(Kingdom value)
         {

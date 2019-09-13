@@ -7,7 +7,7 @@ namespace Sampekey.Interface
     public interface ISystem
     {
         Task<IEnumerable<Castle>> GetAllCastles();
-        Task<Castle> FindCastleById(Castle value);
+        Task<Castle> FindCastleById(string value);
         Task<Castle> AddCastle(Castle value);
         Task<Castle> UpdateCastle(Castle value);
         Task<bool> DeleteCastle(Castle value);
