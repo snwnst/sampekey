@@ -34,8 +34,7 @@ namespace Sampekey.Contex
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("SQL_SAMPEKEY"));
-            optionsBuilder.UseSqlServer("Server=cnsfsqlbisie.cnsf.gob.mx;Database=SAMPEKEY;User Id=ETL_Adm;Password=ETLAdmin123#;");
+            optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("SQL_SAMPEKEY"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
