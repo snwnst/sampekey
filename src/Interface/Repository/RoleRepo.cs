@@ -11,45 +11,35 @@ namespace Sampekey.Interface.Repository
     public class RoleRepo : IRole
     {
         private readonly SampekeyDbContex context;
-        private readonly UserManager<User> userManager;
-        private readonly RoleManager<Role> roleManager;
-
-        public RoleRepo(
-            SampekeyDbContex _context,
-            UserManager<User> _userManager,
-            RoleManager<Role> _roleManager)
+        public RoleRepo(SampekeyDbContex _context)
         {
             context = _context;
-            userManager = _userManager;
-            roleManager = _roleManager;
         }
-
-        public async Task<IEnumerable<Role>> GetRoles()
+       public async Task<IEnumerable<Role>> GetAllRoles()
         {
             return await context.Role.ToListAsync();
         }
-        public Task<Role> FindRoleByName(string roleName)
+        public async Task<Role> FindRoleById(string value)
         {
-            return roleManager.FindByNameAsync(roleName);
+            return await context.Role.FirstOrDefaultAsync(i => i.Id == value);
         }
-        public Task<Role> FindRoleById(string roleId)
+        public async Task<Role> AddRole(Role value)
         {
-            return roleManager.FindByIdAsync(roleId);
+            await context.Role.AddAsync(value);
+            context.SaveChanges();
+            return value;
         }
-        public Task<IdentityResult> CreateRole(Role role)
+        public async Task<Role> UpdateRole(Role value)
         {
-            return roleManager.CreateAsync(role);
+            context.Update(value);
+            context.SaveChanges();
+            return await context.Role.FirstOrDefaultAsync(i => i.Id == value.Id);
         }
-
-        public Task<IList<Claim>> GetClaimsFromRole(Role role)
+        public async Task<bool> DeleteRole(Role value)
         {
-            return roleManager.GetClaimsAsync(role);
+            context.Remove(value);
+            await context.SaveChangesAsync();
+            return true;
         }
-
-        public Task<IdentityResult> AddClaimAsyncToRole(Role role, Claim claim)
-        {
-            return roleManager.AddClaimAsync(role, claim);
-        }
-
     }
 }

@@ -11,6 +11,7 @@ namespace Sampekey.Model.Identity
     {
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
         public Boolean Active { get; set; } = true;
+        public Boolean userFromActiveDirectory { get; set; } = false;
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

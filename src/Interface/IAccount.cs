@@ -14,11 +14,8 @@ namespace Sampekey.Interface
         Task<SignInResult> LoginWithSampeKey(SampekeyUserAccountRequest userAccountRequest);
         Task UpdateForcePaswordAsync(SampekeyUserAccountRequest userAccountRequest);
         HashSet<string> GetUsersWithActiveDirectory(SampekeyUserAccountRequest userAccountRequest);
-        Task<User> FindUserByUserName(SampekeyUserAccountRequest userAccountRequest);
         Task<IdentityResult> CreateUser(SampekeyUserAccountRequest userAccountRequest);
         Task<IdentityResult> AddDefaultRoleToUser(User user);
-        Task<IList<Claim>> GetClaimsFromUser(User user);
-        Task<IList<string>> GetRolesFromUser(User user);
     }
 }
 

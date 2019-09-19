@@ -11,16 +11,14 @@ namespace Sampekey.Interface.Repository
 {
     public class AccountRepo : IAccount
     {
-        private readonly SampekeyDbContex context;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
         public AccountRepo(
-            SampekeyDbContex _context,
+
             UserManager<User> _userManager,
             SignInManager<User> _signInManager)
         {
-            context = _context;
             userManager = _userManager;
             signInManager = _signInManager;
         }
@@ -42,10 +40,14 @@ namespace Sampekey.Interface.Repository
             }
         }
 
+        public Task<SignInResult> LoginWithSampeKey(SampekeyUserAccountRequest userAccountRequest)
+        {
+            return signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false);
+        }
+
         public HashSet<string> GetUsersWithActiveDirectory(SampekeyUserAccountRequest userAccountRequest)
         {
             var users = new HashSet<string>();
-
             try
             {
                 using (var connection = new LdapConnection { SecureSocketLayer = false })
@@ -61,13 +63,10 @@ namespace Sampekey.Interface.Repository
                     );
                     while (searchResults.hasMore())
                     {
-
                         LdapEntry nextEntry = null;
-
                         nextEntry = searchResults.next();
                         nextEntry.getAttributeSet();
                         var attr = nextEntry.getAttribute("mail");
-
                         if (attr == null)
                         {
                             users.Add(nextEntry.getAttribute("distinguishedName").StringValue);
@@ -86,19 +85,10 @@ namespace Sampekey.Interface.Repository
             }
         }
 
-        public Task<SignInResult> LoginWithSampeKey(SampekeyUserAccountRequest userAccountRequest)
-        {
-            return signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false);
-        }
-
         public async Task UpdateForcePaswordAsync(SampekeyUserAccountRequest userAccountRequest)
         {
             await userManager.RemovePasswordAsync(userAccountRequest);
             await userManager.AddPasswordAsync(userAccountRequest, userAccountRequest.Password);
-        }
-
-        public Task<User> FindUserByUserName(SampekeyUserAccountRequest userAccountRequest){
-            return userManager.FindByNameAsync(userAccountRequest.UserName);
         }
 
         public Task<IdentityResult> CreateUser(SampekeyUserAccountRequest userAccountRequest)
@@ -109,15 +99,6 @@ namespace Sampekey.Interface.Repository
         public Task<IdentityResult> AddDefaultRoleToUser(User user)
         {
             return userManager.AddToRoleAsync(user, "default");
-        }
-
-        public Task<IList<string>> GetRolesFromUser(User user)
-        {
-            return userManager.GetRolesAsync(user);
-        }
-        public Task<IList<Claim>> GetClaimsFromUser(User user)
-        {
-            return userManager.GetClaimsAsync(user);
         }
 
     }

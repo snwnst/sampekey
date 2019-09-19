@@ -10,12 +10,11 @@ namespace Sampekey.Interface
 {
     public interface IRole
     {
-        Task<IEnumerable<Role>> GetRoles();
-        Task<IdentityResult> CreateRole(Role role);
-        Task<Role> FindRoleByName(string roleName);
-        Task<Role> FindRoleById(string roleId);
-        Task<IdentityResult> AddClaimAsyncToRole(Role role, Claim claim);
-        Task<IList<Claim>> GetClaimsFromRole(Role role);
+        Task<IEnumerable<Role>> GetAllRoles();
+        Task<Role> FindRoleById(string value);
+        Task<Role> AddRole(Role value);
+        Task<Role> UpdateRole(Role value);
+        Task<bool> DeleteRole(Role value);
     }
 }
 
