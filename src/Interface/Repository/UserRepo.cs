@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sampekey.Contex;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 using Sampekey.Model.Identity;
 
 namespace Sampekey.Interface.Repository

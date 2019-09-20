@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Sampekey.Contex;
 using Microsoft.AspNetCore.Identity;
 using Sampekey.Model.Identity;
-using System.Security.Claims;
 
 namespace Sampekey.Interface
 {

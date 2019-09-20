@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sampekey.Interface.Repository;
 using Sampekey.Model.Identity;
 
 namespace Sampekey.Interface

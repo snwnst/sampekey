@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Sampekey.Contex;
 using Sampekey.Model.Identity;
-using System.Security.Claims;
 
 namespace Sampekey.Interface.Repository
 {

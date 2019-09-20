@@ -1,9 +1,5 @@
-using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Sampekey.Contex;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 using Sampekey.Model.Identity;
 
 namespace Sampekey.Interface
