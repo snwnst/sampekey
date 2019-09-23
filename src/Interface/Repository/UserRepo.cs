@@ -23,6 +23,10 @@ namespace Sampekey.Interface.Repository
         {
             return await context.User.FirstOrDefaultAsync(i => i.Id == value);
         }
+        public async Task<User> FindUserByUsername(string value)
+        {
+            return await context.User.FirstOrDefaultAsync(i => i.UserName == value);
+        }
         public async Task<User> AddUser(User value)
         {
             await context.User.AddAsync(value);

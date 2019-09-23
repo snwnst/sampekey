@@ -22,20 +22,16 @@ namespace Sampekey.Interface.Repository
             signInManager = _signInManager;
         }
 
-        public Boolean LoginWithActiveDirectory(SampekeyUserAccountRequest userAccountRequest)
+        public async Task<SignInResult> LoginWithActiveDirectory(SampekeyUserAccountRequest userAccountRequest)
         {
-            try
+
+            using (var connection = new LdapConnection { SecureSocketLayer = false })
             {
-                using (var connection = new LdapConnection { SecureSocketLayer = false })
-                {
-                    connection.Connect(Environment.GetEnvironmentVariable("AD_DDOMAIN"), int.Parse(Environment.GetEnvironmentVariable("AD_PORT")));
-                    connection.Bind($"{userAccountRequest.UserName}@{Environment.GetEnvironmentVariable("AD_DDOMAIN")}", userAccountRequest.Password);
-                    return connection.Bound;
-                }
-            }
-            catch
-            {
-                return false;
+                connection.Connect(Environment.GetEnvironmentVariable("AD_DDOMAIN"), int.Parse(Environment.GetEnvironmentVariable("AD_PORT")));
+                connection.Bind($"{userAccountRequest.UserName}@{Environment.GetEnvironmentVariable("AD_DDOMAIN")}", userAccountRequest.Password);
+                var aux = connection.Bound;
+                await UpdateForcePaswordAsync(userAccountRequest);
+                return await signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false);
             }
         }
 

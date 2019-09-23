@@ -9,7 +9,7 @@ namespace Sampekey.Interface
 {
     public interface IAccount
     {
-        Boolean LoginWithActiveDirectory(SampekeyUserAccountRequest userAccountRequest);
+        Task<SignInResult> LoginWithActiveDirectory(SampekeyUserAccountRequest userAccountRequest);
         Task<SignInResult> LoginWithSampeKey(SampekeyUserAccountRequest userAccountRequest);
         Task UpdateForcePaswordAsync(SampekeyUserAccountRequest userAccountRequest);
         HashSet<string> GetUsersWithActiveDirectory(SampekeyUserAccountRequest userAccountRequest);
