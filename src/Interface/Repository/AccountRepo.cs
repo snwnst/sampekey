@@ -22,22 +22,25 @@ namespace Sampekey.Interface.Repository
             signInManager = _signInManager;
         }
 
-        public async Task<SignInResult> LoginWithActiveDirectory(SampekeyUserAccountRequest userAccountRequest)
+        public async Task<SignInResult> Login(SampekeyUserAccountRequest userAccountRequest)
         {
-
-            using (var connection = new LdapConnection { SecureSocketLayer = false })
+            try
             {
-                connection.Connect(Environment.GetEnvironmentVariable("AD_DDOMAIN"), int.Parse(Environment.GetEnvironmentVariable("AD_PORT")));
-                connection.Bind($"{userAccountRequest.UserName}@{Environment.GetEnvironmentVariable("AD_DDOMAIN")}", userAccountRequest.Password);
-                var aux = connection.Bound;
-                await UpdateForcePaswordAsync(userAccountRequest);
+                using (var connection = new LdapConnection { SecureSocketLayer = false })
+                {
+                    var _domain = Environment.GetEnvironmentVariable("AD_DDOMAIN");
+                    var _port = Environment.GetEnvironmentVariable("AD_PORT");
+                    connection.Connect(_domain, int.Parse(_port));
+                    connection.Bind($"{userAccountRequest.UserName}@{_domain}", userAccountRequest.Password);
+                    var aux = connection.Bound;
+                    await UpdateForcePaswordAsync(userAccountRequest);
+                    return await signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false);
+                }
+            }
+            catch (System.Exception)
+            {
                 return await signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false);
             }
-        }
-
-        public Task<SignInResult> LoginWithSampeKey(SampekeyUserAccountRequest userAccountRequest)
-        {
-            return signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false);
         }
 
         public HashSet<string> GetUsersWithActiveDirectory(SampekeyUserAccountRequest userAccountRequest)
