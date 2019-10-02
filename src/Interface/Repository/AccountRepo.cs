@@ -85,8 +85,9 @@ namespace Sampekey.Interface.Repository
 
         public async Task UpdateForcePaswordAsync(SampekeyUserAccountRequest userAccountRequest)
         {
-            await userManager.RemovePasswordAsync(userAccountRequest);
-            await userManager.AddPasswordAsync(userAccountRequest, userAccountRequest.Password);
+            var user = await userManager.FindByEmailAsync(userAccountRequest.Email);
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            await userManager.ResetPasswordAsync(user, token, userAccountRequest.Password);
         }
 
         public Task<IdentityResult> CreateUser(SampekeyUserAccountRequest userAccountRequest)
