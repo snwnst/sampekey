@@ -22,7 +22,7 @@ namespace Sampekey.Interface.Repository
             signInManager = _signInManager;
         }
 
-        public async Task<SignInResult> Login(SampekeyUserAccountRequest userAccountRequest)
+        public async Task<Boolean> Login(SampekeyUserAccountRequest userAccountRequest)
         {
             try
             {
@@ -33,13 +33,15 @@ namespace Sampekey.Interface.Repository
                     connection.Connect(_domain, int.Parse(_port));
                     connection.Bind($"{userAccountRequest.UserName}@{_domain}", userAccountRequest.Password);
                     var aux = connection.Bound;
-                    await UpdateForcePaswordAsync(userAccountRequest);
-                    return await signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false);
+                    return true;
                 }
             }
             catch (System.Exception)
             {
-                return await signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false);
+                if((await signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false)).Succeeded)
+                    return true;
+                else 
+                    return false;
             }
         }
 
