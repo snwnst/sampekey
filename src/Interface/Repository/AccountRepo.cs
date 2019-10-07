@@ -14,7 +14,6 @@ namespace Sampekey.Interface.Repository
         private readonly SignInManager<User> signInManager;
 
         public AccountRepo(
-
             UserManager<User> _userManager,
             SignInManager<User> _signInManager)
         {

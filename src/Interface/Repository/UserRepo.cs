@@ -44,8 +44,6 @@ namespace Sampekey.Interface.Repository
             context.Remove(value);
             await context.SaveChangesAsync();
             return true;
-
         }
-
     }
 }
