@@ -4,8 +4,8 @@
 
 ## Installation
 
-PSQLS_SAMPEKEY
-SQLS_SAMPEKEY
+PSQL_SAMPEKEY
+SQL_SAMPEKEY
 
 
 ## Usage
