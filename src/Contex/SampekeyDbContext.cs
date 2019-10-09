@@ -34,10 +34,7 @@ namespace Sampekey.Contex
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (Environment.GetEnvironmentVariable("SQL_SAMPEKEY") != "")
-                optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("SQL_SAMPEKEY"));
-            else
-                optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("PSQL_SAMPEKEY"));
+            optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("SQL_SAMPEKEY"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
