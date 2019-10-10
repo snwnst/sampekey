@@ -40,7 +40,7 @@ namespace Sampekey.Contex
                 audience: Dominio,
                 claims: new[]
                 {
-                    new Claim(JwtRegisteredClaimNames.UniqueName, model.Email),
+                    new Claim(JwtRegisteredClaimNames.UniqueName, model.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 },
                 expires: DateTime.UtcNow.AddHours(Expire),
