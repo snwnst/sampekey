@@ -28,8 +28,9 @@ namespace Sampekey.Interface.Repository
                 using (var connection = new LdapConnection { SecureSocketLayer = false })
                 {
                     var _domain = Environment.GetEnvironmentVariable("AD_DDOMAIN");
+                    var _domainServer = Environment.GetEnvironmentVariable("AD_DDOMAIN_SSERVER");
                     var _port = Environment.GetEnvironmentVariable("AD_PORT");
-                    connection.Connect(_domain, int.Parse(_port));
+                    connection.Connect(_domainServer, int.Parse(_port));
                     connection.Bind($"{userAccountRequest.UserName}@{_domain}", userAccountRequest.Password);
                     var aux = connection.Bound;
                     return true;
