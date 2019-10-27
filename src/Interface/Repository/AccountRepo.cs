@@ -52,9 +52,14 @@ namespace Sampekey.Interface.Repository
             {
                 using (var connection = new LdapConnection { SecureSocketLayer = false })
                 {
-                    connection.Connect(Environment.GetEnvironmentVariable("AD_DDOMAIN"), int.Parse(Environment.GetEnvironmentVariable("AD_PORT")));
-                    connection.Bind($"{userAccountRequest.UserName}@{Environment.GetEnvironmentVariable("AD_DDOMAIN")}", userAccountRequest.Password);
+                    var _domain = Environment.GetEnvironmentVariable("AD_DDOMAIN");
+                    var _domainServer = Environment.GetEnvironmentVariable("AD_DDOMAIN_SSERVER");
+                    var _port = Environment.GetEnvironmentVariable("AD_PORT");
+
+                    connection.Connect(_domainServer, int.Parse(_port));
+                    connection.Bind($"{userAccountRequest.UserName}@{_domain}", userAccountRequest.Password);
                     LdapSearchResults searchResults = connection.Search(
+                        
                     Environment.GetEnvironmentVariable("BIND_DN"),
                     LdapConnection.SCOPE_SUB,
                     Environment.GetEnvironmentVariable("LDAP_FILTER"),
