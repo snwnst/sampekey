@@ -4,6 +4,7 @@
 
 ## Installation
 
+S
 PSQL_SAMPEKEY
 SQL_SAMPEKEY
 
