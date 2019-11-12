@@ -6,7 +6,7 @@ namespace Sampekey.Model.Core
     public class Default
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        [Column(TypeName="DATETIME")]
+        [Column(TypeName="timestamp")]
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
         public Boolean Active { get; set; } = true;
     }
