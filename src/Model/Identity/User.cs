@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Sampekey.Model.Identity
 {
-    [Table("T_USER")]
+    [Table("T_USER", Schema = "sake")]
     public class User : IdentityUser
     {
-        [Column(TypeName="timestamp")]
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
         public Boolean Active { get; set; } = true;
         public Boolean userFromActiveDirectory { get; set; } = false;

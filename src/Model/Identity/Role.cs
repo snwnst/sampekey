@@ -7,7 +7,7 @@ using Sampekey.Model.Configuration.Quid;
 
 namespace Sampekey.Model.Identity
 {
-    [Table("T_ROLE")]
+    [Table("T_ROLE", Schema = "sake")]
     public class Role : IdentityRole
     {
         public virtual ICollection<UserRole> UserRoles { get; set; }

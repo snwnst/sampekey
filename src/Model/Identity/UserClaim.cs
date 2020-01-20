@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Sampekey.Model.Identity
 {
-    [Table("T_USER_CLAIM")]
+    [Table("T_USER_CLAIM", Schema = "sake")]
     public class UserClaim : IdentityUserClaim<string>
     {
 

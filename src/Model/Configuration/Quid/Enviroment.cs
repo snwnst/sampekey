@@ -6,7 +6,7 @@ using Sampekey.Model.Core;
 
 namespace Sampekey.Model.Configuration.Quid
 {
-    [Table("T_ENVIROMENT")]
+    [Table("T_ENVIROMENT", Schema = "sake")]
     public class Enviroment: Catalog
     {
         public virtual ICollection<EnviromentProjectRolePermission> EnviromentProjectRolePermissions { get; set; }

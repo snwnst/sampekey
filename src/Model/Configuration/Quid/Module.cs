@@ -6,7 +6,7 @@ using Sampekey.Model.Core;
 
 namespace Sampekey.Model.Configuration.Quid
 {
-    [Table("T_MODULES")]
+    [Table("T_MODULES", Schema = "sake")]
     public class Module : PathCatalog
     {
         public virtual ICollection<ProjectModule> ProjectModules { get; set; }
