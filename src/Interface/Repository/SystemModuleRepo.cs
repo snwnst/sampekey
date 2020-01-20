@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sampekey.Contex;
-using Sampekey.Model.Configuration.Module;
+using Sampekey.Model.Configuration.Breakers;
+using Sampekey.Model.Configuration.Quid;
 
 namespace Sampekey.Interface.Repository
 {
@@ -16,28 +17,28 @@ namespace Sampekey.Interface.Repository
             context = _context;
         }
 
-        public async Task<IEnumerable<CastleLand>> GetAllCastleLands()
+        public async Task<IEnumerable<ProjectModule>> GetAllProjectModules()
         {
-            return await context.CastleLand.ToListAsync();
+            return await context.ProjectModule.ToListAsync();
         }
-        public async Task<CastleLand> FindCastleLandById(string value)
+        public async Task<ProjectModule> FindProjectModuleById(string value)
         {
-            return await context.CastleLand.FirstOrDefaultAsync(i => i.Id == value);
+            return await context.ProjectModule.FirstOrDefaultAsync(i => i.Id == value);
         }
-        public async Task<CastleLand> AddCastleLand(CastleLand value)
+        public async Task<ProjectModule> AddProjectModule(ProjectModule value)
         {
-            await context.CastleLand.AddAsync(value);
+            await context.ProjectModule.AddAsync(value);
             context.SaveChanges();
             return value;
         }
 
-        public async Task<CastleLand> UpdateCastleLand(CastleLand value)
+        public async Task<ProjectModule> UpdateProjectModule(ProjectModule value)
         {
             context.Update(value);
             context.SaveChanges();
-            return await context.CastleLand.FirstOrDefaultAsync(i => i.Id == value.Id);
+            return await context.ProjectModule.FirstOrDefaultAsync(i => i.Id == value.Id);
         }
-        public async Task<bool> DeleteCastleLand(CastleLand value)
+        public async Task<bool> DeleteProjectModule(ProjectModule value)
         {
             context.Remove(value);
             await context.SaveChangesAsync();

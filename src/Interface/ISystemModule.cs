@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sampekey.Model.Configuration.Module;
+using Sampekey.Model.Configuration.Breakers;
+using Sampekey.Model.Configuration.Quid;
 
 namespace Sampekey.Interface
 {
     public interface ISystemModule
     {
-        Task<IEnumerable<CastleLand>> GetAllCastleLands();
-        Task<CastleLand> FindCastleLandById(string value);
-        Task<CastleLand> AddCastleLand(CastleLand value);
-        Task<CastleLand> UpdateCastleLand(CastleLand value);
-        Task<bool> DeleteCastleLand(CastleLand value);
+        Task<IEnumerable<ProjectModule>> GetAllProjectModules();
+        Task<ProjectModule> FindProjectModuleById(string value);
+        Task<ProjectModule> AddProjectModule(ProjectModule value);
+        Task<ProjectModule> UpdateProjectModule(ProjectModule value);
+        Task<bool> DeleteProjectModule(ProjectModule value);
         
     }
 }

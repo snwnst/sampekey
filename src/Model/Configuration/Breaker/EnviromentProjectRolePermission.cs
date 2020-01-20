@@ -1,22 +1,21 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Sampekey.Model.Administration;
+using Sampekey.Model.Configuration.Quid;
 using Sampekey.Model.Core;
 using Sampekey.Model.Identity;
 
-namespace Sampekey.Model.Configuration.Module
+namespace Sampekey.Model.Configuration.Breakers
 {
     [Table("T_ENVIROMENT_SYSTEM_ROLE_PERMISSION")]
-    public class KingdomCastleRolePermission: Default
+    public class EnviromentProjectRolePermission: Default
     {
-        [Column("EnviromentId")]
-        public string KingdomId { get; set;}
-        [Column("SystemId")]
-        public string CastleId { get; set; }
+        public string EnviromentId { get; set;}
+        public string ProjectId { get; set; }
         public string RoleId { get; set;}
         public string PermissionId { get; set; }
-        public virtual Kingdom Kingdom { get; set; }
-        public virtual Castle Castle { get; set; }
+        public virtual Enviroment Enviroment { get; set; }
+        public virtual Project Project { get; set; }
         public virtual Role Role { get; set; }
         public virtual Permission Permission { get; set; }  
 

@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Sampekey.Model.Administration;
 using Sampekey.Model.Identity;
-using Sampekey.Model.Configuration.Module;
+using Sampekey.Model.Configuration.Quid;
+using Sampekey.Model.Configuration.Breakers;
 
 namespace Sampekey.Contex
 {
@@ -24,17 +25,17 @@ namespace Sampekey.Contex
         public virtual DbSet<UserLogin> UserLogin { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<UserToken> UserToken { get; set; }
-        public virtual DbSet<Castle> Castle { get; set; }
-        public virtual DbSet<Kingdom> Kingdom { get; set; }
-        public virtual DbSet<KingdomCastleRolePermission> KingdomCastleRolePermission { get; set; }
+        public virtual DbSet<Project> Project { get; set; }
+        public virtual DbSet<Enviroment> Enviroment { get; set; }
+        public virtual DbSet<EnviromentProjectRolePermission> EnviromentProjectRolePermission { get; set; }
         public virtual DbSet<Permission> Permission { get; set; }
-        public virtual DbSet<Land> Land { get; set; }
-        public virtual DbSet<CastleLand> CastleLand { get; set; }
+        public virtual DbSet<Module> Module { get; set; }
+        public virtual DbSet<ProjectModule> ProjectModule { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("PSQL_SAMPEKEY"));
+            optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("MSQL_SAMPEKEY"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,48 +50,48 @@ namespace Sampekey.Contex
             modelBuilder.Entity<IdentityUserRole<string>>().ToTable("T_USER_ROLE");
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("T_USER_TOKEN");
             modelBuilder.Entity<RoleClaim>();
-            modelBuilder.Entity<Castle>();
-            modelBuilder.Entity<Land>();
-            modelBuilder.Entity<CastleLand>();
-            modelBuilder.Entity<Kingdom>();
-            modelBuilder.Entity<KingdomCastleRolePermission>();
+            modelBuilder.Entity<Project>();
+            modelBuilder.Entity<Module>();
+            modelBuilder.Entity<ProjectModule>();
+            modelBuilder.Entity<Enviroment>();
+            modelBuilder.Entity<EnviromentProjectRolePermission>();
             modelBuilder.Entity<Permission>();
 
-            modelBuilder.Entity<CastleLand>(entity =>
+            modelBuilder.Entity<ProjectModule>(entity =>
             {
-                entity.HasKey(c => new { c.Id, c.CastleId, c.LandId });
-                entity.HasOne(d => d.Castle)
-                    .WithMany(p => p.CastleLands)
-                    .HasForeignKey(d => d.CastleId)
+                entity.HasKey(c => new { c.Id, c.ProjectId, c.ModuleId });
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.ProjectModules)
+                    .HasForeignKey(d => d.ProjectId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
-                entity.HasOne(d => d.Land)
-                    .WithMany(p => p.CastleLands)
-                    .HasForeignKey(d => d.LandId)
+                entity.HasOne(d => d.Module)
+                    .WithMany(p => p.ProjectModules)
+                    .HasForeignKey(d => d.ModuleId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
-            modelBuilder.Entity<KingdomCastleRolePermission>(entity =>
+            modelBuilder.Entity<EnviromentProjectRolePermission>(entity =>
             {
-                entity.HasKey(c => new { c.Id, c.KingdomId, c.CastleId, c.RoleId, c.PermissionId });
+                entity.HasKey(c => new { c.Id, c.EnviromentId, c.ProjectId, c.RoleId, c.PermissionId });
 
-                entity.HasOne(d => d.Kingdom)
-                    .WithMany(p => p.KingdomCastleRolePermissions)
-                    .HasForeignKey(d => d.KingdomId)
+                entity.HasOne(d => d.Enviroment)
+                    .WithMany(p => p.EnviromentProjectRolePermissions)
+                    .HasForeignKey(d => d.EnviromentId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
-                entity.HasOne(d => d.Castle)
-                    .WithMany(p => p.KingdomCastleRolePermissions)
-                    .HasForeignKey(d => d.CastleId)
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.EnviromentProjectRolePermissions)
+                    .HasForeignKey(d => d.ProjectId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(d => d.Role)
-                    .WithMany(p => p.KingdomCastleRolePermissions)
+                    .WithMany(p => p.EnviromentProjectRolePermissions)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(d => d.Permission)
-                    .WithMany(p => p.KingdomCastleRolePermissions)
+                    .WithMany(p => p.EnviromentProjectRolePermissions)
                     .HasForeignKey(d => d.PermissionId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });

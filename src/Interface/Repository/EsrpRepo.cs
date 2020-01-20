@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sampekey.Contex;
-using Sampekey.Model.Configuration.Module;
+using Sampekey.Model.Configuration.Breakers;
+using Sampekey.Model.Configuration.Quid;
 
 namespace Sampekey.Interface.Repository
 {
@@ -16,28 +17,28 @@ namespace Sampekey.Interface.Repository
             context = _context;
         }
 
-        public async Task<IEnumerable<KingdomCastleRolePermission>> GetAllKingdomCastleRolePermissions()
+        public async Task<IEnumerable<EnviromentProjectRolePermission>> GetAllEnviromentProjectRolePermissions()
         {
-            return await context.KingdomCastleRolePermission.ToListAsync();
+            return await context.EnviromentProjectRolePermission.ToListAsync();
         }
-        public async Task<KingdomCastleRolePermission> FindKingdomCastleRolePermissionById(string value)
+        public async Task<EnviromentProjectRolePermission> FindEnviromentProjectRolePermissionById(string value)
         {
-            return await context.KingdomCastleRolePermission.FirstOrDefaultAsync(i => i.Id == value);
+            return await context.EnviromentProjectRolePermission.FirstOrDefaultAsync(i => i.Id == value);
         }
-        public async Task<KingdomCastleRolePermission> AddKingdomCastleRolePermission(KingdomCastleRolePermission value)
+        public async Task<EnviromentProjectRolePermission> AddEnviromentProjectRolePermission(EnviromentProjectRolePermission value)
         {
-            await context.KingdomCastleRolePermission.AddAsync(value);
+            await context.EnviromentProjectRolePermission.AddAsync(value);
             context.SaveChanges();
             return value;
         }
 
-        public async Task<KingdomCastleRolePermission> UpdateKingdomCastleRolePermission(KingdomCastleRolePermission value)
+        public async Task<EnviromentProjectRolePermission> UpdateEnviromentProjectRolePermission(EnviromentProjectRolePermission value)
         {
             context.Update(value);
             context.SaveChanges();
-            return await context.KingdomCastleRolePermission.FirstOrDefaultAsync(i => i.Id == value.Id);
+            return await context.EnviromentProjectRolePermission.FirstOrDefaultAsync(i => i.Id == value.Id);
         }
-        public async Task<bool> DeleteKingdomCastleRolePermission(KingdomCastleRolePermission value)
+        public async Task<bool> DeleteEnviromentProjectRolePermission(EnviromentProjectRolePermission value)
         {
             context.Remove(value);
             await context.SaveChangesAsync();

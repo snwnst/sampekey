@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sampekey.Contex;
-using Sampekey.Model.Configuration.Module;
+using Sampekey.Model.Configuration.Quid;
 
 namespace Sampekey.Interface.Repository
 {
@@ -16,28 +16,28 @@ namespace Sampekey.Interface.Repository
             context = _context;
         }
 
-        public async Task<IEnumerable<Castle>> GetAllCastles()
+        public async Task<IEnumerable<Project>> GetAllProjects()
         {
-            return await context.Castle.ToListAsync();
+            return await context.Project.ToListAsync();
         }
-        public async Task<Castle> FindCastleById(string value)
+        public async Task<Project> FindProjectById(string value)
         {
-            return await context.Castle.FirstOrDefaultAsync(i => i.Id == value);
+            return await context.Project.FirstOrDefaultAsync(i => i.Id == value);
         }
-        public async Task<Castle> AddCastle(Castle value)
+        public async Task<Project> AddProject(Project value)
         {
-            await context.Castle.AddAsync(value);
+            await context.Project.AddAsync(value);
             context.SaveChanges();
             return value;
         }
 
-        public async Task<Castle> UpdateCastle(Castle value)
+        public async Task<Project> UpdateProject(Project value)
         {
             context.Update(value);
             context.SaveChanges();
-            return await context.Castle.FirstOrDefaultAsync(i => i.Id == value.Id);
+            return await context.Project.FirstOrDefaultAsync(i => i.Id == value.Id);
         }
-        public async Task<bool> DeleteCastle(Castle value)
+        public async Task<bool> DeleteProject(Project value)
         {
             context.Remove(value);
             await context.SaveChangesAsync();

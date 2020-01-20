@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sampekey.Model.Configuration.Module;
+using Sampekey.Model.Configuration.Quid;
 
 namespace Sampekey.Interface
 {
     public interface ISystem
     {
-        Task<IEnumerable<Castle>> GetAllCastles();
-        Task<Castle> FindCastleById(string value);
-        Task<Castle> AddCastle(Castle value);
-        Task<Castle> UpdateCastle(Castle value);
-        Task<bool> DeleteCastle(Castle value);
+        Task<IEnumerable<Project>> GetAllProjects();
+        Task<Project> FindProjectById(string value);
+        Task<Project> AddProject(Project value);
+        Task<Project> UpdateProject(Project value);
+        Task<bool> DeleteProject(Project value);
         
     }
 }

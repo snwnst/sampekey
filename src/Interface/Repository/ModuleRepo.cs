@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sampekey.Contex;
-using Sampekey.Model.Configuration.Module;
+using Sampekey.Model.Configuration.Quid;
 
 namespace Sampekey.Interface.Repository
 {
@@ -16,28 +16,28 @@ namespace Sampekey.Interface.Repository
             context = _context;
         }
 
-        public async Task<IEnumerable<Land>> GetAllLands()
+        public async Task<IEnumerable<Module>> GetAllModules()
         {
-            return await context.Land.ToListAsync();
+            return await context.Module.ToListAsync();
         }
-        public async Task<Land> FindLandById(string value)
+        public async Task<Module> FindModuleById(string value)
         {
-            return await context.Land.FirstOrDefaultAsync(i => i.Id == value);
+            return await context.Module.FirstOrDefaultAsync(i => i.Id == value);
         }
-        public async Task<Land> AddLand(Land value)
+        public async Task<Module> AddModule(Module value)
         {
-            await context.Land.AddAsync(value);
+            await context.Module.AddAsync(value);
             context.SaveChanges();
             return value;
         }
 
-        public async Task<Land> UpdateLand(Land value)
+        public async Task<Module> UpdateModule(Module value)
         {
             context.Update(value);
             context.SaveChanges();
-            return await context.Land.FirstOrDefaultAsync(i => i.Id == value.Id);
+            return await context.Module.FirstOrDefaultAsync(i => i.Id == value.Id);
         }
-        public async Task<bool> DeleteLand(Land value)
+        public async Task<bool> DeleteModule(Module value)
         {
             context.Remove(value);
             await context.SaveChangesAsync();

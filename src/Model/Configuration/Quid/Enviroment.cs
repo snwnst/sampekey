@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 using Sampekey.Model.Configuration.Breakers;
-using Sampekey.Model.Configuration.Quid;
+using Sampekey.Model.Core;
 
-namespace Sampekey.Model.Identity
+namespace Sampekey.Model.Configuration.Quid
 {
-    [Table("T_ROLE")]
-    public class Role : IdentityRole
+    [Table("T_ENVIROMENT")]
+    public class Enviroment: Catalog
     {
-        public virtual ICollection<UserRole> UserRoles { get; set; }
         public virtual ICollection<EnviromentProjectRolePermission> EnviromentProjectRolePermissions { get; set; }
     }
 }

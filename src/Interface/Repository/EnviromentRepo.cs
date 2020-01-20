@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sampekey.Contex;
-using Sampekey.Model.Configuration.Module;
+using Sampekey.Model.Configuration.Quid;
 
 namespace Sampekey.Interface.Repository
 {
@@ -16,28 +16,28 @@ namespace Sampekey.Interface.Repository
             context = _context;
         }
 
-        public async Task<IEnumerable<Kingdom>> GetAllKingdoms()
+        public async Task<IEnumerable<Enviroment>> GetAllEnviroments()
         {
-            return await context.Kingdom.ToListAsync();
+            return await context.Enviroment.ToListAsync();
         }
-        public async Task<Kingdom> FindKingdomById(string value)
+        public async Task<Enviroment> FindEnviromentById(string value)
         {
-            return await context.Kingdom.FirstOrDefaultAsync(i => i.Id == value);
+            return await context.Enviroment.FirstOrDefaultAsync(i => i.Id == value);
         }
-        public async Task<Kingdom> AddKingdom(Kingdom value)
+        public async Task<Enviroment> AddEnviroment(Enviroment value)
         {
-            await context.Kingdom.AddAsync(value);
+            await context.Enviroment.AddAsync(value);
             context.SaveChanges();
             return value;
         }
 
-        public async Task<Kingdom> UpdateKingdom(Kingdom value)
+        public async Task<Enviroment> UpdateEnviroment(Enviroment value)
         {
             context.Update(value);
             context.SaveChanges();
-            return await context.Kingdom.FirstOrDefaultAsync(i => i.Id == value.Id);
+            return await context.Enviroment.FirstOrDefaultAsync(i => i.Id == value.Id);
         }
-        public async Task<bool> DeleteKingdom(Kingdom value)
+        public async Task<bool> DeleteEnviroment(Enviroment value)
         {
             context.Remove(value);
             await context.SaveChangesAsync();
