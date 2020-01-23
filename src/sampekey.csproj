@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageId>Sampekey</PackageId>
     <Description>Libreria para sistema de autenticacion generica</Description>
-    <Version>1.5.0</Version>
+    <Version>1.5.1</Version>
     <Authors>Nestor Martinez Hernandez</Authors>
     <Company>Techmedel</Company>
     <PackageProjectUrl>https://github.com/techmedel/sampekey</PackageProjectUrl>
@@ -17,7 +17,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1" />

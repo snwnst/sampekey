@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Sampekey.Model.Identity
 {
-    [Table("T_USER", Schema = "sake")]
+    [Table("T_USER", Schema = "dbo")]
     public class User : IdentityUser
     {
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
