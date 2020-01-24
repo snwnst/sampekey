@@ -7,7 +7,7 @@ using Sampekey.Model.Core;
 
 namespace Sampekey.Model.Administration
 {
-    [Table("T_PERMISSION", Schema = "dbo")]
+    [Table("T_PERMISSION")]
     public class Permission : Catalog
     {
         public virtual ICollection<EnviromentProjectRolePermission> EnviromentProjectRolePermissions { get; set; }

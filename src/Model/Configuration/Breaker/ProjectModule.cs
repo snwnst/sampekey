@@ -6,7 +6,7 @@ using Sampekey.Model.Core;
 
 namespace Sampekey.Model.Configuration.Breakers
 {
-    [Table("T_SYSTEM_MODULES", Schema = "dbo")]
+    [Table("T_SYSTEM_MODULES")]
     public class ProjectModule : Default
     {
         public string ProjectId { get; set; }

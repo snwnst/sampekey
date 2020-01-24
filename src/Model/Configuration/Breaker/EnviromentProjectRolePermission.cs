@@ -7,7 +7,7 @@ using Sampekey.Model.Identity;
 
 namespace Sampekey.Model.Configuration.Breakers
 {
-    [Table("T_ENVIROMENT_SYSTEM_ROLE_PERMISSION", Schema = "dbo")]
+    [Table("T_ENVIROMENT_SYSTEM_ROLE_PERMISSION")]
     public class EnviromentProjectRolePermission: Default
     {
         public string EnviromentId { get; set;}
