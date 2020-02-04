@@ -1,6 +1,6 @@
+using Sampekey.Model.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sampekey.Model.Identity;
 
 namespace Sampekey.Interface
 {
@@ -11,6 +11,6 @@ namespace Sampekey.Interface
         Task<IEnumerable<UserRole>> FindUserRolesByRoleId(string value);
         Task<UserRole> AddUserRole(UserRole value);
         Task<bool> DeleteUserRole(UserRole value);
-        
+
     }
 }

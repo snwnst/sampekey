@@ -1,13 +1,12 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sampekey.Contex;
 using Sampekey.Model.Configuration.Breakers;
-using Sampekey.Model.Configuration.Quid;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sampekey.Interface.Repository
 {
-    public class EsrpRepo: IEsrp
+    public class EsrpRepo : IEsrp
     {
 
         private readonly SampekeyDbContex context;

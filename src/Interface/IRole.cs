@@ -1,6 +1,6 @@
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Sampekey.Model.Identity;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sampekey.Interface
 {

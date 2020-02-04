@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Sampekey.Contex;
+using Sampekey.Model.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sampekey.Contex;
-using Microsoft.EntityFrameworkCore;
-using Sampekey.Model.Identity;
 
 namespace Sampekey.Interface.Repository
 {
@@ -13,7 +13,7 @@ namespace Sampekey.Interface.Repository
         {
             context = _context;
         }
-       public async Task<IEnumerable<Role>> GetAllRoles()
+        public async Task<IEnumerable<Role>> GetAllRoles()
         {
             return await context.Role.ToListAsync();
         }

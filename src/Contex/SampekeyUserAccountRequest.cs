@@ -1,5 +1,3 @@
-using System;
-using Sampekey.Model;
 using Sampekey.Model.Identity;
 
 namespace Sampekey.Contex

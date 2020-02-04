@@ -1,17 +1,17 @@
-using System;
-using Novell.Directory.Ldap;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using Novell.Directory.Ldap;
 using Sampekey.Contex;
 using Sampekey.Model.Identity;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sampekey.Interface.Repository
 {
     public class AccountRepo : IAccount
     {
         private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager ;
+        private readonly SignInManager<User> signInManager;
 
         public AccountRepo(
             UserManager<User> _userManager,
@@ -38,9 +38,9 @@ namespace Sampekey.Interface.Repository
             }
             catch (System.Exception)
             {
-                if((await signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false)).Succeeded)
+                if ((await signInManager.PasswordSignInAsync(userAccountRequest.UserName, userAccountRequest.Password, isPersistent: false, lockoutOnFailure: false)).Succeeded)
                     return true;
-                else 
+                else
                     return false;
             }
         }
@@ -59,7 +59,7 @@ namespace Sampekey.Interface.Repository
                     connection.Connect(_domainServer, int.Parse(_port));
                     connection.Bind($"{userAccountRequest.UserName}@{_domain}", userAccountRequest.Password);
                     LdapSearchResults searchResults = connection.Search(
-                        
+
                     Environment.GetEnvironmentVariable("BIND_DN"),
                     LdapConnection.SCOPE_SUB,
                     Environment.GetEnvironmentVariable("LDAP_FILTER"),

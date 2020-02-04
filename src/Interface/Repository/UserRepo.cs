@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Sampekey.Contex;
+using Sampekey.Model.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sampekey.Contex;
-using Microsoft.EntityFrameworkCore;
-using Sampekey.Model.Identity;
 
 namespace Sampekey.Interface.Repository
 {
@@ -10,7 +10,7 @@ namespace Sampekey.Interface.Repository
     {
         private readonly SampekeyDbContex context;
 
-        public UserRepo( SampekeyDbContex _context)
+        public UserRepo(SampekeyDbContex _context)
         {
             context = _context;
         }

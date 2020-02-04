@@ -1,6 +1,6 @@
+using Sampekey.Model.Configuration.Quid;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sampekey.Model.Configuration.Quid;
 
 namespace Sampekey.Interface
 {

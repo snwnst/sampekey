@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Sampekey.Model.Configuration.Breakers;
 using Sampekey.Model.Core;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sampekey.Model.Configuration.Quid
 {
@@ -11,6 +10,6 @@ namespace Sampekey.Model.Configuration.Quid
     {
         public virtual ICollection<EnviromentProjectRolePermission> EnviromentProjectRolePermissions { get; set; }
         public virtual ICollection<ProjectModule> ProjectModules { get; set; }
-        
+
     }
 }

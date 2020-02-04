@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sampekey.Contex;
 using Sampekey.Model.Administration;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sampekey.Interface.Repository
 {

@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sampekey.Contex;
 using Sampekey.Model.Identity;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sampekey.Interface.Repository
 {
@@ -19,19 +19,19 @@ namespace Sampekey.Interface.Repository
 
         public async Task<IEnumerable<UserRole>> GetAllUserRoles()
         {
-            return await context.UserRole.Include(x=>x.Role).ToListAsync();
+            return await context.UserRole.Include(x => x.Role).ToListAsync();
         }
         public async Task<IEnumerable<UserRole>> FindUserRolesByUserId(string value)
         {
             return await context.UserRole
-            .Include(x=>x.Role)
+            .Include(x => x.Role)
             .Where(i => i.UserId == value)
             .ToListAsync();
         }
         public async Task<IEnumerable<UserRole>> FindUserRolesByRoleId(string value)
         {
             return await context.UserRole
-            .Include(x=>x.Role)
+            .Include(x => x.Role)
             .Where(i => i.RoleId == value)
             .ToListAsync();
         }

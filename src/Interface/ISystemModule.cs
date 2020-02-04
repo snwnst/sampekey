@@ -1,7 +1,6 @@
+using Sampekey.Model.Configuration.Breakers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sampekey.Model.Configuration.Breakers;
-using Sampekey.Model.Configuration.Quid;
 
 namespace Sampekey.Interface
 {
@@ -12,6 +11,6 @@ namespace Sampekey.Interface
         Task<ProjectModule> AddProjectModule(ProjectModule value);
         Task<ProjectModule> UpdateProjectModule(ProjectModule value);
         Task<bool> DeleteProjectModule(ProjectModule value);
-        
+
     }
 }

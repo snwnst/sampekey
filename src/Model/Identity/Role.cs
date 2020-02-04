@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Sampekey.Model.Configuration.Breakers;
-using Sampekey.Model.Configuration.Quid;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sampekey.Model.Identity
 {
