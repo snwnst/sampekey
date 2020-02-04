@@ -8,7 +8,6 @@ namespace Sampekey.Model.Identity
     [Table("T_ROLE")]
     public class Role : IdentityRole
     {
-        public virtual ICollection<UserRole> UserRoles { get; set; }
         public virtual ICollection<EnviromentProjectRolePermission> EnviromentProjectRolePermissions { get; set; }
     }
 }

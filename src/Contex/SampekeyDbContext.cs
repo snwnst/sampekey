@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sampekey.Model.Administration;
 using Sampekey.Model.Configuration.Breakers;
@@ -7,7 +9,7 @@ using System;
 
 namespace Sampekey.Contex
 {
-    public class SampekeyDbContex : DbContext
+    public class SampekeyDbContex : IdentityDbContext<User,Role,string>
     {
         public SampekeyDbContex()
         { }
@@ -17,12 +19,7 @@ namespace Sampekey.Contex
 
 
         public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<RoleClaim> RoleClaim { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserClaim> UserClaim { get; set; }
-        public virtual DbSet<UserLogin> UserLogin { get; set; }
-        public virtual DbSet<UserRole> UserRole { get; set; }
-        public virtual DbSet<UserToken> UserToken { get; set; }
         public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<Enviroment> Enviroment { get; set; }
         public virtual DbSet<EnviromentProjectRolePermission> EnviromentProjectRolePermission { get; set; }
@@ -40,14 +37,14 @@ namespace Sampekey.Contex
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Role>();
-            modelBuilder.Entity<RoleClaim>();
-            modelBuilder.Entity<User>();
-            modelBuilder.Entity<UserClaim>();
-            modelBuilder.Entity<UserLogin>();
-            modelBuilder.Entity<UserRole>();
-            modelBuilder.Entity<UserToken>();
-            modelBuilder.Entity<RoleClaim>();
+            modelBuilder.Entity<User>().ToTable("T_USER");
+            modelBuilder.Entity<Role>().ToTable("T_ROLE");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("T_USER_TOKEN");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("T_ROLE_CLAIM");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("T_USER_CLAIM");
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("T_USER_LOGIN");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("T_USER_ROLE");
+
             modelBuilder.Entity<Project>();
             modelBuilder.Entity<Module>();
             modelBuilder.Entity<ProjectModule>();
@@ -93,52 +90,6 @@ namespace Sampekey.Contex
                     .HasForeignKey(d => d.PermissionId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
-
-            modelBuilder.Entity<UserRole>(entity =>
-            {
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserRoles)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
-                entity.HasOne(d => d.Role)
-                   .WithMany(p => p.UserRoles)
-                   .HasForeignKey(d => d.RoleId)
-                   .OnDelete(DeleteBehavior.ClientSetNull);
-
-            });
-
-            modelBuilder.Entity<UserClaim>(entity =>
-            {
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserClaims)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
-            });
-
-            modelBuilder.Entity<UserToken>(entity =>
-            {
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserTokens)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
-            });
-
-            modelBuilder.Entity<UserLogin>(entity =>
-            {
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserLogins)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
-            });
-
-
 
         }
     }
