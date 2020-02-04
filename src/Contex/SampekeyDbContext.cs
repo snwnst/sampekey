@@ -1,3 +1,11 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Sampekey.Model.Administration;
+using Sampekey.Model.Configuration.Breakers;
+using Sampekey.Model.Configuration.Quid;
+using Sampekey.Model.Identity;
+using System;
+
 namespace Sampekey.Contex
 {
     public class SampekeyDbContex : IdentityDbContext<User, Role, string>
