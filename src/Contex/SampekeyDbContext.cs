@@ -1,12 +1,3 @@
-using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Sampekey.Model.Administration;
-using Sampekey.Model.Identity;
-using Sampekey.Model.Configuration.Quid;
-using Sampekey.Model.Configuration.Breakers;
-
 namespace Sampekey.Contex
 {
     public class SampekeyDbContex : IdentityDbContext<User, Role, string>
@@ -42,13 +33,13 @@ namespace Sampekey.Contex
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Role>().ToTable("T_ROLE");
-            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("T_ROLE_CLAIM");
-            modelBuilder.Entity<User>().ToTable("T_USER");
-            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("T_USER_CLAIM");
-            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("T_USER_LOGIN");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("T_USER_ROLE");
-            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("T_USER_TOKEN");
+            modelBuilder.Entity<Role>();
+            modelBuilder.Entity<RoleClaim>();
+            modelBuilder.Entity<User>();
+            modelBuilder.Entity<UserClaim>();
+            modelBuilder.Entity<UserLogin>();
+            modelBuilder.Entity<UserRole>();
+            modelBuilder.Entity<UserToken>();
             modelBuilder.Entity<RoleClaim>();
             modelBuilder.Entity<Project>();
             modelBuilder.Entity<Module>();
