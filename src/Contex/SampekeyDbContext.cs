@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sampekey.Model.Administration;
 using Sampekey.Model.Configuration.Breakers;
@@ -8,7 +7,7 @@ using System;
 
 namespace Sampekey.Contex
 {
-    public class SampekeyDbContex : IdentityDbContext<User, Role, string>
+    public class SampekeyDbContex : DbContext
     {
         public SampekeyDbContex()
         { }
@@ -107,6 +106,35 @@ namespace Sampekey.Contex
                    .WithMany(p => p.UserRoles)
                    .HasForeignKey(d => d.RoleId)
                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+            });
+
+            modelBuilder.Entity<UserClaim>(entity =>
+            {
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserClaims)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+            });
+
+            modelBuilder.Entity<UserToken>(entity =>
+            {
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserTokens)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+            });
+
+            modelBuilder.Entity<UserLogin>(entity =>
+            {
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserLogins)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
 
             });
 
