@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageId>Sampekey</PackageId>
     <Description>Libreria para sistema de autenticacion generica</Description>
-    <Version>1.5.5</Version>
+    <Version>1.5.6</Version>
     <Authors>Nestor Martinez Hernandez</Authors>
     <Company>Techmedel</Company>
     <PackageProjectUrl>https://github.com/techmedel/sampekey</PackageProjectUrl>
